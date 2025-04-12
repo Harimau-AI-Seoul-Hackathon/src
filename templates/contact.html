@@ -7,19 +7,18 @@
   <link rel="stylesheet" href="/static/style.css" />
 </head>
 <body>
-  <header>
-    <div class="nav-container">
-      <nav>
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="location">Location</a></li>
-          <li><a href="safety_guide">Safety Guide</a></li>
-          <li><a href="donations">Donations</a></li>
-          <li><a href="">Contact Us</a></li>
-        </ul>
-      </nav>
+  <header class="bg-red-600 text-white p-6">
+    <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+        <div class="text-center md:text-left">
+            <h1 class="text-3xl font-bold">Korea Emergency Response</h1>
+            <p class="text-lg">24/7 Emergency Assistance & Support</p>
+        </div>
+        <div class="flex items-center space-x-4 mt-4 md:mt-0">
+            <button class="bg-white text-red-400 px-4 py-2 rounded">a</button>
+            <button class="bg-white text-red-800 px-4 py-2 rounded">A</button>
+        </div>
     </div>
-  </header>
+</header>
 
  
   <div class="contact-container">
@@ -302,18 +301,55 @@
 
       <!-- Phone Service Card -->
       <div id="phone" class="card-section card">
-        <img src="https://www.bbbkorea.org/images/bbb_logo.png" alt="bbb Korea Logo" />
-        <div class="card-info">
-          <p><strong>bbbkorea</strong></p>
-          <p>Tel: 1588-5644</p>
-          <p>Website: <a> href="https://www.bbbkorea.org" target="_blank">https://www.bbbkorea.org</a></p>
-          <p>Supported languages: English, Japanese, Chinese, French, Spanish, Italian, Russian, German, Portuguese, Arabic, Polish, Turkish, Swedish, Thai, Vietnamese, Indonesian, Mongolian, Hindi, Malay, Swahili</p>
-          <p>Available hours: 24 hours a day, 365 days a year</p>
-        </div>
-        <div class="buttons">
-          <button onclick="window.open('tel:15885644')">Tel</button>
-          <button onclick="window.open('https://www.bbbkorea.org', '_blank')">Website</button>
-        </div>
+        <div class="container">
+            <div class="card">
+                <h2>bbbkorea</h2>
+                <p><strong>Tel:</strong> <span class="icon">📞</span> 1588-5644</p>
+                <p><strong>Website:</strong> <a href="https://www.bbbkorea.org">www.bbbkorea.org</a></p>
+                <p><strong>Supported Languages:</strong> English, Japanese, Chinese, French, Spanish, Italian, Russian, German, Portuguese, Arabic, Polish, Turkic, Swedish, Thai, Vietnamese, Indonesian, Mongolian, Hindi, Malay, Swahili</p>
+                <p><strong>Available Hours:</strong> 24 hours a day, 365 days a year</p>
+            </div>
+  
+          <div class="card">
+              <h2>Foreigner Information Center</h2>
+              <p><strong>Tel:</strong> <span class="icon">📞</span> 1345</p>
+              <p><strong>Website:</strong> <a href="https://www.hikorea.go.kr"> www.hikorea.go.kr</a></p>
+              <p><strong>Supported Languages:</strong> Korean, Chinese, English, Vietnamese, Thai, Japanese, Mongolian, Indonesian, French, Bangladeshi, Pakistani, Russian, Nepali, Cambodian, Burmese, German, Spanish, Filipino, Arabic, Sri Lankan</p>
+              <p><strong>Available Hours:</strong> Weekdays 09:00–22:00</p>
+          </div>
+  
+          <div class="card">
+              <h2>Tourist Interpretation Information Line</h2>
+              <p><strong>Tel:</strong> <span class="icon">📞</span> 1330</p>
+              <p><strong>Website:</strong> <a href="https://english.visitkorea.or.kr"> english.visitkorea.or.kr</a></p>
+              <p><strong>Supported Languages:</strong> Korean, English, Japanese, Chinese, Russian, Vietnamese, Thai, Malay, Indonesian</p>
+              <p><strong>Available Hours:</strong> 24 hours a day, 365 days a year</p>
+          </div>
+  
+          <div class="card">
+              <h2>Danuri Call Center</h2>
+              <p><strong>Tel:</strong> <span class="icon">📞</span> 1577-1366</p>
+              <p><strong>Website:</strong> <a href="https://www.liveinkorea.kr"> www.liveinkorea.kr</a></p>
+              <p><strong>Supported Languages:</strong> Korean, English, Chinese, Vietnamese, Filipino, Russian, Thai, Mongolian, Japanese, Khmer, Nepali, Urdu</p>
+              <p><strong>Available Hours:</strong> 24 hours a day, 365 days a year</p>
+          </div>
+  
+          <div class="card">
+              <h2>Dasan Call Center Foreign Language Consultation</h2>
+              <p><strong>Tel:</strong> <span class="icon">📞</span> 120 + 9</p>
+              <p><strong>Website:</strong> <a href="https://www.120dasan.or.kr"> www.120dasan.or.kr</a></p>
+              <p><strong>Supported Languages:</strong> English, Chinese, Japanese, Vietnamese, Mongolian</p>
+              <p><strong>Available Hours:</strong> 09:00–18:00, Excluding public holidays</p>
+          </div>
+  
+          <div class="card">
+              <h2>Interpretation Service</h2>
+              <p><strong>Tel:</strong> <span class="icon">📞</span> N/A </p>
+              <p><strong>Website:</strong> <a href="https://www.flitto.com/portal/ko"> www.flitto.com/portal/ko</a></p>
+              <p><strong>Supported Languages:</strong> English, Japanese, Chinese, Vietnamese, Mongolian</p>
+              <p><strong>Available Hours:</strong> 09:00–18:00, Excluding public holidays</p>
+          </div>
+      </div>
       </div>
 
       <!-- Organizations Card -->
@@ -341,7 +377,7 @@
     }
 
     // Optional: Set default visible card (phone)
-    window.onload = () => showSection('phone');
+    window.onload = () => showSection('embassy');
   </script>
 </body>
 </html>

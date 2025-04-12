@@ -1,74 +1,87 @@
-</nav>            
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Disaster Safety Map Popup</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    #map {
+      height: 400px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 p-6">
 
-<!-- Main Content -->
-<section class="main-content">
-    <div class="animation-wrapper">
-        <div class="water">
-            <ul class="waves">
-                <li class="wave-one" style="background-image: url('https://i.postimg.cc/7LtCC11Y/wave1.png');"></li>
-                <li class="wave-two" style="background-image: url('https://i.postimg.cc/P5hv05rh/wave2.png');"></li>
-                <li class="wave-three" style="background-image: url('https://i.postimg.cc/63Dyc91k/wave3.png');"></li>
-                <li class="wave-four" style="background-image: url('https://i.postimg.cc/1tg8DgM0/wave4.png');"></li>
-            </ul>
-        </div>
-        <div class="boat" style="background-image: url('https://i.postimg.cc/GmQTRnHD/boat2.png');"></div>
-        <div class="cloud" style="background-image: url('https://i.postimg.cc/VNkrLZCV/cloud-md.png');"></div>
-        <div class="cloud2" style="background-image: url('https://i.postimg.cc/VNkrLZCV/cloud-md.png');"></div>
+  <!-- Button to open modal -->
+  <div class="bg-white p-6 rounded-lg shadow cursor-pointer" onclick="openModal()">
+    <div class="flex items-center space-x-4">
+      <i class="fas fa-warehouse text-red-600 text-2xl"></i>
+      <h2 class="text-xl font-bold">Civil Defense Shelters</h2>
     </div>
-    <div class="content-wrapper">
-        <h1>Welcome to ShipsEar!</h1>
-        <p>ShipsEar : An underwater vessel noise database</p>
-        <p>Your go-to source for analyze and predict acoustic.</p>
-
-        <h2>Introduction to Underwater Acoustic Noise</h2>
-        <p>
-          <strong>Passive Sonar</strong> is a technique used to detect and analyze underwater sounds without emitting signals. 
-          It involves listening for sounds in the environment rather than sending out sound pulses. This project focuses on analyzing acoustic data to classify ship types and make predictions based on acoustic data uploaded.
-        </p>
-        <a id="load-audio" class="btn" href="/audio">Upload Your Audio</a>
-    </div>
-</section>
-
-  <section id="overview-map" class="content-section">
-    <h2>Type of vessel and Their Locations</h2>
-    <div class="filter-controls">
-      <h3>Filter by Vessel Type</h3>
-      <select id="ship-filter" class="ship-filter">
-          <option value="all">All Classes</option>
-          <option value="Motorboat">Motorboat</option>
-          <option value="OceanLiner">Ocean Liner</option>
-          <option value="Tanker">Tanker</option>
-          <option value="Trawler">Trawler</option>
-          <option value="Natural Ambient Noise">Natural Ambient Noise</option>
-          <option value="Tugboat">Tugboat</option>
-          <option value="PilotShip">Pilot Ship</option>
-          <option value="MusselBoat">Mussel Boat</option>
-          <option value="Cargo">Cargo</option>
-          <option value="Sailboat">Sailboat</option>
-          <option value="Passengers">Passengers</option>
-          <option value="RORO">RORO</option>
-          <option value="Fishboat">Fishboat</option>
-      </select>
-      <button id="reset-map">Reset Map</button>
+    <p class="mt-2 text-gray-600">Click to see the map</p>
   </div>
-    <div class="map-description-container">
-        <div id="mapOverview"></div>
-        <div class="ship-description">
-            <ul>
-                <li><strong>Motor Boat:</strong> Significant contributors to noise due to large engines and continuous operation.</li>
-                <li><strong>Ocean Liner Ships:</strong> Cruise ships and ferries produce substantial low-frequency noise.</li>
-                <li><strong>Tanker:</strong> Generates noise primarily from high-powered engines and propulsion systems.</li>
-                <li><strong>Trawler:</strong> Fishing equipment like trawl doors contributes to noise production.</li>
-                <li><strong>Tug Boat:</strong> Dynamic positioning systems and high-power engines create significant noise.</li>
-                <li><strong>Pilot Ships:</strong> Short-range vessels with high engine power that produce considerable noise.</li>
-                <li><strong>Passenger Ships:</strong> Emit intermittent, high-frequency noise, especially in coastal areas.</li>
-                <li><strong>Mussel Boat:</strong> Specialized vessels with equipment that generates moderate noise levels.</li>
-                <li><strong>Cargo Ships:</strong> Large engines and machinery contribute to continuous, low-frequency noise.</li>
-                <li><strong>RORO Ships:</strong> Roll-on/roll-off ships generate noise from engines and cargo handling operations.</li>
-                <li><strong>Fish Boat:</strong> Fishing Vessel</li>
-                <li><strong>Sail Boat:</strong> Generally quieter but may produce noise from auxiliary engines.</li>
-                <li><strong>Natural Ambient Noise:</strong> Background noise from wind, waves, and marine life in the environment.</li>                    
-            </ul>
-        </div>
+
+  <!-- Modal -->
+  <div id="shelterModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div class="bg-white p-6 rounded-lg w-[90%] md:w-[600px] relative">
+      <h3 class="text-xl font-semibold mb-2">Disaster Safety Map</h3>
+      <div id="map" class="rounded-lg border mb-4"></div>
+      <button class="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-2xl" onclick="closeModal()">&times;</button>
     </div>
-</section>    
+  </div>
+
+  <!-- JS Script -->
+  <script>
+    function openModal() {
+      document.getElementById('shelterModal').classList.remove('hidden');
+      setTimeout(initializeMap, 200); // Ensure modal renders before loading map
+    }
+
+    function closeModal() {
+      document.getElementById('shelterModal').classList.add('hidden');
+    }
+
+    let mapInitialized = false;
+
+    function initializeMap() {
+      if (mapInitialized) return;
+
+      const map = L.map('map').setView([37.5665, 126.9780], 11); // Seoul default
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19
+      }).addTo(map);
+
+      fetch("http://localhost:5000/api/disaster-data")
+        .then(res => res.json())
+        .then(data => {
+          const items = data.response.body.items;
+          if (!items || items.length === 0) {
+            alert("No disaster data found.");
+            return;
+          }
+
+          items.forEach(item => {
+            const lat = parseFloat(item.lat || item.latitude);
+            const lon = parseFloat(item.lon || item.longitude);
+            const info = item.msg || item.content || "Disaster Alert";
+
+            if (lat && lon) {
+              L.marker([lat, lon])
+                .addTo(map)
+                .bindPopup(info);
+            }
+          });
+        })
+        .catch(err => console.error("Error loading data:", err));
+
+      mapInitialized = true;
+    }
+  </script>
+
+</body>
+</html>

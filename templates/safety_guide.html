@@ -26,15 +26,20 @@
     </div>
     
     <div class="tabs-safety">
-        <button class="tablinks active" onclick="disaster(event, 'Emergency Preparation')">Emergency Preparation</button>
+        <button class="tablinks" onclick="disaster(event, 'Emergency Preparation')">Emergency Preparation</button>
         <button class="tablinks" onclick="disaster(event, 'Earthquake')">Earthquake</button>
         <button class="tablinks" onclick="disaster(event, 'Fire')">Fire</button>
         <button class="tablinks" onclick="disaster(event, 'Flood')">Flood</button>
         <button class="tablinks" onclick="disaster(event, 'Typhoon')">Typhoon</button>
     </div>
-
+    <script>
+        window.onload = function() {
+            document.querySelector('.tablinks[onclick*="Emergency Preparation"]').click();
+        };
+    </script>
+    
     <div class="tabs-wrapper">
-        <div id="Earthquake" class="tabs-content active">
+        <div id="Emergency Preparation" class="tabs-content">
             <div class="slideshow-container">
                 <div class="slides fade">
                     <div class="number-text">1 / 3</div>
@@ -69,22 +74,22 @@
             <div class="slideshow-container">
                 <div class="slides fade">
                     <div class="number-text">1 / 3</div>
-                    <img src="http://www.brandpointcontent.com/InfoGraphics//18479010101.jpg" alt="Emergency Preparedness">
+                    <img src="https://cdn.dribbble.com/userupload/15682253/file/original-30e5f416059bbb3ae027fab896428291.png?resize=640x1120&vertical=center" alt="Earthquake Safety Tips">
                 </div>
-
+    
                 <div class="slides fade">
                     <div class="number-text">2 / 3</div>
-                    <img src="https://www150.statcan.gc.ca/n1/pub/11-627-m/image/11-627-m2015004-eng.jpg" alt="Disaster Preparedness">
+                    <img src="https://i.pinimg.com/736x/67/d3/18/67d31818ce78b2e78ea4be7eed61bd69.jpg" alt="What To Do During An Earthquake">
                 </div>
-
+    
                 <div class="slides fade">
                     <div class="number-text">3 / 3</div>
-                    <img src="https://cdn11.bigcommerce.com/s-5d127/images/stencil/500x659/products/12415/15558/PSTR-1054__12140.1631634126.jpg?c=2" alt="Disaster Preparedness in Workplace">
+                    <img src="https://s3.amazonaws.com/thumbnails.venngage.com/template/9c7a7d05-2bc6-4e7d-a425-e3f446d35330.png" alt="Earthquake Survival">
                 </div>
-
+    
                 <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                 <a class="next" onclick="plusSlides(1)">&#10095;</a>
-
+    
                 <br>
                 <div class="dots">
                     <span class="dot" onclick="currentSlide(1)"></span>
@@ -95,12 +100,97 @@
         </div>
     </div>
     
-    <div id="Fire" class="tabs-content">
+    <div class="tabs-wrapper">
+        <div id="Fire" class="tabs-content">
+            <div class="slideshow-container">
+                <div class="slides fade">
+                    <div class="number-text">1 / 3</div>
+                    <img src="https://cdn.prod.website-files.com/647888ca92d03e3fca3f1ea0/647888ca92d03e3fca3f205d_Fire%20Safety%20Infographic.png" alt="Fire 1">
+                </div>
+    
+                <div class="slides fade">
+                    <div class="number-text">2 / 3</div>
+                    <img src="https://pia.gov.ph/uploads/2023/03/a97454a57f3c3b3020710b70264c7fb1.jpg" alt="Fire 2">
+                </div>
+    
+                <div class="slides fade">
+                    <div class="number-text">3 / 3</div>
+                    <img src="https://corporate.homedepot.com/sites/default/files/image_gallery/firesafetyinfographic-01.jpg" alt="Fire 3">
+                </div>
+    
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    
+                <br>
+                <div class="dots">
+                    <span class="dot" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                    <span class="dot" onclick="currentSlide(3)"></span>
+                </div>
+            </div>
+        </div>
     </div>
-    <div id="Flood" class="tabs-content">
+
+    <div class="tabs-wrapper">
+        <div id="Flood" class="tabs-content">
+            <div class="slideshow-container">
+                <div class="slides fade">
+                    <div class="number-text">1 / 3</div>
+                    <img src="https://hsseworld.com/wp-content/uploads/2022/02/Flood-safety-.png" alt="Flood 1">
+                </div>
+    
+                <div class="slides fade">
+                    <div class="number-text">2 / 3</div>
+                    <img src="https://www.cambriancards.com/wp-content/uploads/2019/11/flood-driving.jpg" alt="Flood 2">
+                </div>
+    
+                <div class="slides fade">
+                    <div class="number-text">3 / 3</div>
+                    <img src="https://floodsmartcanada.ca/wp-content/uploads/2020/04/FloodSmartCanada_Infographic_OverlandFloodInsurance202003225-791x1024.jpg" alt="Flood 3">
+                </div>
+    
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    
+                <br>
+                <div class="dots">
+                    <span class="dot" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                    <span class="dot" onclick="currentSlide(3)"></span>
+                </div>
+            </div>
+        </div>
     </div>
-    <div id="Typhoon" class="tabs-content">
-    </div>
+
+    <div class="tabs-wrapper">
+        <div id="Typhoon" class="tabs-content">
+            <div class="slideshow-container">
+                <div class="slides fade">
+                    <div class="number-text">1 / 3</div>
+                    <img src="https://media.philstar.com/images/the-philippine-star/headlines/20161019/typhoon-survival-tips-infographic%20%281%29.jpg" alt="Typhoon 1">
+                </div>
+    
+                <div class="slides fade">
+                    <div class="number-text">2 / 3</div>
+                    <img src="https://sa.kapamilya.com/absnews/abscbnnews/media/2019/business/07/10/20190710-moneymax-typhoon-3.jpg" alt="Typhoon 2">
+                </div>
+    
+                <div class="slides fade">
+                    <div class="number-text">3 / 3</div>
+                    <img src="https://panahon.tv/beta/v2/web/app/uploads/2014/08/2.jpg" alt="Typhoon 3">
+                </div>
+    
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    
+                <br>
+                <div class="dots">
+                    <span class="dot" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                    <span class="dot" onclick="currentSlide(3)"></span>
+                </div>
+            </div>
+        </div>
     </div>
     
     <script src="/static/tab-func.js"></script>

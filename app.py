@@ -31,6 +31,10 @@ def contact():
 def chatbot():
     return render_template("chatbot.html")
 
+@app.route("/report")
+def report():
+    return render_template("report.html")
+
 @app.route("/chat", methods=["POST"])
 def chat():
 

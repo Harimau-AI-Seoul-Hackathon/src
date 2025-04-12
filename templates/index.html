@@ -2,19 +2,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Korea Emergency Response</title>
+    <title>resQ : Ready to Rescue</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+    <!-- Add this in your <head> if not already included -->
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="/static/style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <style>
-    <style>
-    .main-section {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      padding: 20px;
-    }
 
     #map {
       flex: 1 1 60%;
@@ -50,28 +46,24 @@
       border: none;
       border-radius: 10px;
     }
-
 </style>
 <body class="bg-gray-100">
     <header class="bg-red-600 text-white p-6">
         <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
             <div class="text-center md:text-left">
-                <h1 class="text-3xl font-bold">Korea Emergency Response</h1>
+                <h1 class="text-3xl font-bold" style="color:white;">resQ: Ready to Rescue</h1>
                 <p class="text-lg">24/7 Emergency Assistance & Support</p>
             </div>
             <div class="flex items-center space-x-4 mt-4 md:mt-0">
-                <button class="bg-white text-red-600 px-4 py-2 rounded">119</button>
-                <button class="bg-white text-red-600 px-4 py-2 rounded">112</button>
-                <a href="/contact">
-                    <button class="bg-red-800 text-white px-4 py-2 rounded">Emergency Contact</button>
-                </a>
-            </div>
+                <button class="bg-white text-red-400 px-4 py-2 rounded" onclick="adjustFontSize('small')">a</button>
+                <button class="bg-white text-red-800 px-4 py-2 rounded" onclick="adjustFontSize('large')">A</button>
+              </div>
+              
         </div>
     </header>
 
     <main class="container mx-auto py-8">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             <div class="bg-white p-6 rounded-lg shadow">
                 <div class="flex items-center space-x-4">
                     <i class="fas fa-warehouse text-red-600 text-2xl"></i>
@@ -79,6 +71,96 @@
                 </div>
                 <p class="mt-2 text-gray-600">No facilities found</p>
             </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="flex items-center space-x-4">
+                    <i class="fas fa-hospital text-red-600 text-2xl"></i>
+                    <h2 class="text-xl font-bold">Emergency Medical Centers</h2>
+                </div>
+                <p class="mt-2 text-gray-600">No facilities found</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="flex items-center space-x-4">
+                    <i class="fas fa-shield-alt text-red-600 text-2xl"></i>
+                    <h2 class="text-xl font-bold">Police Stations</h2>
+                </div>
+                <p class="mt-2 text-gray-600">No facilities found</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="flex items-center space-x-4">
+                    <i class="fas fa-fire-extinguisher text-red-600 text-2xl"></i>
+                    <h2 class="text-xl font-bold">Fire Stations</h2>
+                </div>
+                <p class="mt-2 text-gray-600">No facilities found</p>
+            </div>
+        </div>
+
+    <main class="container mx-auto py-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Cards -->
+            <!-- Button to open modal -->
+            <div class="bg-white p-6 rounded-lg shadow cursor-pointer" onclick="openModal()">
+                <div class="flex items-center space-x-4">
+                <i class="fas fa-warehouse text-red-600 text-2xl"></i>
+                <h2 class="text-xl font-bold">Civil Defense Shelters</h2>
+                </div>
+                <p class="mt-2 text-gray-600">Click to see the map</p>
+            </div>
+
+            <!-- Modal -->
+            <div id="shelterModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+                <div class="bg-white p-6 rounded-lg w-[90%] md:w-[600px] relative">
+                <h3 class="text-xl font-semibold mb-2">Disaster Safety Map</h3>
+                <div id="map" class="rounded-lg border mb-4"></div>
+                <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=122935&libraries=services"></script>
+                <script>
+                    // Initialize the map
+                    var mapContainer = document.getElementById('map');
+                    var mapOption = {
+                        center: new kakao.maps.LatLng(37.4979502, 127.0276368), // Gangnam-gu center
+                        level: 5
+                    };
+                    var map = new kakao.maps.Map(mapContainer, mapOption);
+
+                    // Create a Places search object
+                    var ps = new kakao.maps.services.Places();
+
+                    // Search for civil defense shelters
+                    ps.keywordSearch('민방위대피소', placesSearchCB, {
+                        location: new kakao.maps.LatLng(37.4979502, 127.0276368),
+                        radius: 5000
+                    });
+
+                    // Callback function for search results
+                    function placesSearchCB(data, status, pagination) {
+                        if (status === kakao.maps.services.Status.OK) {
+                            for (var i = 0; i < data.length; i++) {
+                                displayMarker(data[i]);
+                            }
+                        } else {
+                            alert('No results found.');
+                        }
+                    }
+
+                    // Display marker on the map
+                    function displayMarker(place) {
+                        var marker = new kakao.maps.Marker({
+                            map: map,
+                            position: new kakao.maps.LatLng(place.y, place.x)
+                        });
+
+                        // Add click event to marker
+                        kakao.maps.event.addListener(marker, 'click', function() {
+                            var infowindow = new kakao.maps.InfoWindow({
+                                content: '<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>'
+                            });
+                            infowindow.open(map, marker);
+                        });
+                    }
+                </script>
+                <button class="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-2xl" onclick="closeModal()">&times;</button>
+                </div>
+            </div>
+
             <div class="bg-white p-6 rounded-lg shadow">
                 <div class="flex items-center space-x-4">
                     <i class="fas fa-hospital text-red-600 text-2xl"></i>
@@ -108,30 +190,257 @@
                 <p class="mt-2 text-gray-600">Advanced weather monitoring and early warning system.</p>
                 <button class="mt-4 bg-red-600 text-white px-4 py-2 rounded">Check Weather</button>
             </div>
+            <a href="/contact">
+                <button class="bg-red-800 text-white px-4 py-2 rounded">Emergency Contact</button>
+            </a>
+            <a href="https://together.kakao.com/">
+                <button class="bg-red-800 text-white px-4 py-2 rounded">Let's Donate</button>
+            </a>
         </div>
+
+        <div class="mt-8">
+            <h2 class="text-2xl font-bold mb-4">News</h2>
+            <div class="bg-white p-6 rounded-lg shadow mb-4">
+                <h3 class="text-xl font-bold">News Item 1</h3>
+                <p class="mt-2 text-gray-600">Details about news item 1...</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow mb-4">
+                <h3 class="text-xl font-bold">News Item 2</h3>
+                <p class="mt-2 text-gray-600">Details about news item 2...</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow mb-4">
+                <h3 class="text-xl font-bold">News Item 3</h3>
+                <p class="mt-2 text-gray-600">Details about news item 3...</p>
+            </div>
+        </div>
+
+
+        
+        <!-- Safety Guide --> 
+    <div class="safety-guide">
+         <div class="safety-title">
+            <h1>Safety Guide</h1>
+         </div>
+        <div class="tabs-safety">
+            <button class="tablinks" onclick="disaster(event, 'Emergency Preparation')">Emergency Preparation</button>
+            <button class="tablinks" onclick="disaster(event, 'Earthquake')">Earthquake</button>
+            <button class="tablinks" onclick="disaster(event, 'Fire')">Fire</button>
+            <button class="tablinks" onclick="disaster(event, 'Flood')">Flood</button>
+            <button class="tablinks" onclick="disaster(event, 'Typhoon')">Typhoon</button>
+        </div>
+        <script>
+            window.onload = function() {
+                document.querySelector('.tablinks[onclick*="Emergency Preparation"]').click();
+            };
+        </script>
+        
+        <div class="tabs-wrapper">
+            <div id="Emergency Preparation" class="tabs-content">
+                <div class="slideshow-container">
+                    <div class="slides fade">
+                        <div class="number-text">1 / 3</div>
+                        <img src="http://www.brandpointcontent.com/InfoGraphics//18479010101.jpg" alt="Emergency Preparedness">
+                    </div>
+    
+                    <div class="slides fade">
+                        <div class="number-text">2 / 3</div>
+                        <img src="https://www150.statcan.gc.ca/n1/pub/11-627-m/image/11-627-m2015004-eng.jpg" alt="Disaster Preparedness">
+                    </div>
+    
+                    <div class="slides fade">
+                        <div class="number-text">3 / 3</div>
+                        <img src="https://cdn11.bigcommerce.com/s-5d127/images/stencil/500x659/products/12415/15558/PSTR-1054__12140.1631634126.jpg?c=2" alt="Disaster Preparedness in Workplace">
+                    </div>
+    
+                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    
+                    <br>
+                    <div class="dots">
+                        <span class="dot" onclick="currentSlide(1)"></span>
+                        <span class="dot" onclick="currentSlide(2)"></span>
+                        <span class="dot" onclick="currentSlide(3)"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="tabs-wrapper">
+            <div id="Earthquake" class="tabs-content">
+                <div class="slideshow-container">
+                    <div class="slides fade">
+                        <div class="number-text">1 / 3</div>
+                        <img src="https://cdn.dribbble.com/userupload/15682253/file/original-30e5f416059bbb3ae027fab896428291.png?resize=640x1120&vertical=center" alt="Earthquake Safety Tips">
+                    </div>
+        
+                    <div class="slides fade">
+                        <div class="number-text">2 / 3</div>
+                        <img src="https://i.pinimg.com/736x/67/d3/18/67d31818ce78b2e78ea4be7eed61bd69.jpg" alt="What To Do During An Earthquake">
+                    </div>
+        
+                    <div class="slides fade">
+                        <div class="number-text">3 / 3</div>
+                        <img src="https://s3.amazonaws.com/thumbnails.venngage.com/template/9c7a7d05-2bc6-4e7d-a425-e3f446d35330.png" alt="Earthquake Survival">
+                    </div>
+        
+                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        
+                    <br>
+                    <div class="dots">
+                        <span class="dot" onclick="currentSlide(1)"></span>
+                        <span class="dot" onclick="currentSlide(2)"></span>
+                        <span class="dot" onclick="currentSlide(3)"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tabs-wrapper">
+            <div id="Fire" class="tabs-content">
+                <div class="slideshow-container">
+                    <div class="slides fade">
+                        <div class="number-text">1 / 3</div>
+                        <img src="https://cdn.prod.website-files.com/647888ca92d03e3fca3f1ea0/647888ca92d03e3fca3f205d_Fire%20Safety%20Infographic.png" alt="Fire 1">
+                    </div>
+        
+                    <div class="slides fade">
+                        <div class="number-text">2 / 3</div>
+                        <img src="https://pia.gov.ph/uploads/2023/03/a97454a57f3c3b3020710b70264c7fb1.jpg" alt="Fire 2">
+                    </div>
+        
+                    <div class="slides fade">
+                        <div class="number-text">3 / 3</div>
+                        <img src="https://corporate.homedepot.com/sites/default/files/image_gallery/firesafetyinfographic-01.jpg" alt="Fire 3">
+                    </div>
+        
+                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        
+                    <br>
+                    <div class="dots">
+                        <span class="dot" onclick="currentSlide(1)"></span>
+                        <span class="dot" onclick="currentSlide(2)"></span>
+                        <span class="dot" onclick="currentSlide(3)"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="tabs-wrapper">
+            <div id="Flood" class="tabs-content">
+                <div class="slideshow-container">
+                    <div class="slides fade">
+                        <div class="number-text">1 / 3</div>
+                        <img src="https://hsseworld.com/wp-content/uploads/2022/02/Flood-safety-.png" alt="Flood 1">
+                    </div>
+        
+                    <div class="slides fade">
+                        <div class="number-text">2 / 3</div>
+                        <img src="https://www.cambriancards.com/wp-content/uploads/2019/11/flood-driving.jpg" alt="Flood 2">
+                    </div>
+        
+                    <div class="slides fade">
+                        <div class="number-text">3 / 3</div>
+                        <img src="https://floodsmartcanada.ca/wp-content/uploads/2020/04/FloodSmartCanada_Infographic_OverlandFloodInsurance202003225-791x1024.jpg" alt="Flood 3">
+                    </div>
+        
+                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        
+                    <br>
+                    <div class="dots">
+                        <span class="dot" onclick="currentSlide(1)"></span>
+                        <span class="dot" onclick="currentSlide(2)"></span>
+                        <span class="dot" onclick="currentSlide(3)"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="tabs-wrapper">
+            <div id="Typhoon" class="tabs-content">
+                <div class="slideshow-container">
+                    <div class="slides fade">
+                        <div class="number-text">1 / 3</div>
+                        <img src="https://media.philstar.com/images/the-philippine-star/headlines/20161019/typhoon-survival-tips-infographic%20%281%29.jpg" alt="Typhoon 1">
+                    </div>
+        
+                    <div class="slides fade">
+                        <div class="number-text">2 / 3</div>
+                        <img src="https://sa.kapamilya.com/absnews/abscbnnews/media/2019/business/07/10/20190710-moneymax-typhoon-3.jpg" alt="Typhoon 2">
+                    </div>
+        
+                    <div class="slides fade">
+                        <div class="number-text">3 / 3</div>
+                        <img src="https://panahon.tv/beta/v2/web/app/uploads/2014/08/2.jpg" alt="Typhoon 3">
+                    </div>
+        
+                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        
+                    <br>
+                    <div class="dots">
+                        <span class="dot" onclick="currentSlide(1)"></span>
+                        <span class="dot" onclick="currentSlide(2)"></span>
+                        <span class="dot" onclick="currentSlide(3)"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     </main>
 
     <!-- Floating Question Mark Chat Button -->
     <button 
     onclick="toggleChatbot()" 
     class="fixed bottom-0 right-0 bg-red-600 text-white p-4 rounded-full shadow-lg m-4 z-50">
-    <i class="fas fa-question"></i>
+    <i class="fas fa-robot"></i>
     </button>
 
+
     <!-- Chatbot Popup -->
-    <div id="chatbot-popup">
-        <div class="chat-header">
+    <div id="chatbot-popup" style="display: none;">
+        <div class="chat-header" style="background-color: #e63946; color: white; padding: 10px; display: flex; justify-content: space-between; align-items: center;">
             <span>AI Chatbot</span>
-            <button onclick="toggleChatbot()">×</button>
+            <button onclick="toggleChatbot()" style="background: none; border: none; color: white; font-size: 18px; cursor: pointer;">×</button>
         </div>
-        <iframe src="/chatbot" frameborder="0"></iframe>
+        <iframe src="/chatbot" frameborder="0" style="width: 100%; height: 100%; border: none;"></iframe>
     </div>
 
+
+    <footer>
+        <p>&copy; 2023 Emergency Apps. All rights reserved.</p>
+    </footer>
+
+    <script src="/static/tab-func.js"></script>
+    <script src="/static/safety-image.js"></script>
+    <script src="/static/map.js"></script>
     <script>
         function toggleChatbot() {
             const popup = document.getElementById("chatbot-popup");
             popup.style.display = popup.style.display === "none" || popup.style.display === "" ? "block" : "none";
         }
+
+        function openModal() {
+            document.getElementById('shelterModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('shelterModal').classList.add('hidden');
+        }
+
+        function adjustFontSize(size) {
+            const target = document.body; // or use a specific container: document.querySelector('.your-container-class')
+            
+            if (size === 'small') {
+            target.style.fontSize = '14px';
+            } else if (size === 'large') {
+            target.style.fontSize = '24px';
+            }
+        }
+
+
     </script>
 </body>
 </html>
