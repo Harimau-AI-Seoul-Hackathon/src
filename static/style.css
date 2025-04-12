@@ -14,6 +14,7 @@ header {
     top: 0;
     z-index: 1000; /* ensures it stays on top of other content */
 }
+
 .news-bg{
   display: block;
   background-color: #ffffff;
@@ -21,10 +22,14 @@ header {
   border-radius: 10px;
 }
 .news-btn button{
-  background-color: #ddd;
+  background-color: #ffffff;
   border: none;
-  color: #333;
-  margin-top: 25px;
+  padding: 14px 16px;
+  font-size: 18px;
+  color: #e53935;
+  margin: 25px 5px 0px;
+  transition: 0.3s;
+  border-radius: 10px;
 }
 .news-btn button:hover{
   background-color: #e53935;
@@ -663,7 +668,9 @@ footer {
     flex-wrap: wrap;
     gap: 15px;
   }
-
+  .grid-container h2{
+    font-size: 20px;
+  }
   .box {
     flex: 0 1 calc(40% - 15px); 
     padding: 10px;
@@ -671,9 +678,10 @@ footer {
     background-color: #a91414;
     border: 1px solid #ccc;
     cursor: pointer;
-    max-width: 300;
-    max-height: 80;
+    max-width: 400;
+    max-height: 200;
   }
+
   .box:nth-child(1) {
     background-color: #e50c0c;
   }

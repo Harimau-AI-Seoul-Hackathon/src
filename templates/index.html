@@ -6,13 +6,36 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
     <!-- Add this in your <head> if not already included -->
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="/static/style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <style>
+ .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .box {
+    background-color: #fefefe;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  .box:hover {
+    transform: translateY(-4px);
+    background-color: #fdf2f8;
+  }
     .evacuation-container {
   margin-top: 1rem;
   background-color: #fefefe;
@@ -53,12 +76,38 @@
       border: none;
       border-radius: 10px;
     }
+
+
+    :root {
+    --site-font-size: 18px;-
+  }
+
+  body {
+    font-size: var(--site-font-size) !important;
+  }
+
+  /* Force font size for Tailwind typography elements */
+  h1, h2, h3, h4, h5, h6,
+  p, span, a, button, li, label,
+  .text-sm, .text-base, .text-lg, .text-xl, .text-2xl, .text-3xl, .text-4xl {
+    font-size: var(--site-font-size) !important;
+  }
+
+  /* Toggle classes */
+  .font-default {
+    --site-font-size: 18px;
+  }
+
+  .font-large {
+    --site-font-size: 25px;
+  }
+
 </style>
 <body class="bg-gray-100">
     <header class="bg-red-600 text-white p-6">
         <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
             <div class="text-center md:text-left">
-                <h1 class="text-3xl font-bold" style="color:white;">resQ: Ready to Rescue</h1>
+                <h1 class="text-4xl font-bold" style="color:white;">resQ: Ready to Rescue</h1>
                 <p class="text-lg">24/7 Emergency Assistance & Support</p>
             </div>
             <div class="flex items-center space-x-4 mt-4 md:mt-0">
@@ -72,8 +121,30 @@
                         <i class="fas fa-heart"></i> Let's Donate
                     </button>
                 </a>
-                <button class="bg-white text-red-800 px-4 py-2 rounded hover:bg-red-800 hover:text-black" onclick="adjustFontSize('small')">a</button>
-                <button class="bg-white text-red-800 px-4 py-2 rounded hover:bg-red-800 hover:text-black" onclick="adjustFontSize('large')">A</button>
+                <!-- font Size -->
+                <div class="form-check form-switch m-3">
+                  <input class="form-check-input" type="checkbox" id="sizeToggle">
+                  <label class="form-check-label" for="sizeToggle">aA</label>
+                </div>
+                <script>
+                  document.addEventListener('DOMContentLoaded', function () {
+                    const toggle = document.getElementById('sizeToggle');
+                    const body = document.body;
+                
+                    // Start with default font size
+                    body.classList.add('font-default');
+                
+                    toggle.addEventListener('change', function () {
+                      if (this.checked) {
+                        body.classList.remove('font-default');
+                        body.classList.add('font-large');
+                      } else {
+                        body.classList.remove('font-large');
+                        body.classList.add('font-default');
+                      }
+                    });
+                  });
+                </script>
             </div>
         </div>
     </header>
@@ -87,337 +158,451 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">    
         </div>
 
-      <div class="grid-container"> <!-- Arif -->
-        <div class="box" onclick="showPopup('info1')"><i class="fas fa-fire text-2xl"></i><h2 class="text-xl font-bold">Fire</h2></div>
-        <div class="box" onclick="showPopup('info2')"><i class="fas fa-house-damage text-2xl"></i><h2 class="text-xl font-bold">Earthquake</h2></div>
-        <div class="box" onclick="showPopup('info3')"><i class="fas fa-wind text-2xl"></i><h2 class="text-xl font-bold">Typhoon</h2></div>
-        <div class="box" onclick="showPopup('info4')"><i class="fas fa-water text-2xl"></i><h2 class="text-xl font-bold">Flood</h2></div>
+        <!-- tab -->
+        <div class="grid-container"> 
+          <div class="box flex items-center gap-3" onclick="showPopup('info1')">
+            <i class="fas fa-fire text-5xl "></i>
+            <h2 class="text-xl font-bold"> Fire</h2>
+          </div>
+          <div class="box flex items-center gap-3" onclick="showPopup('info2')">
+            <i class="fas fa-house-damage text-5xl "></i>
+            <h2 class="text-xl font-bold"> Earthquake</h2>
+          </div>
+          <div class="box flex items-center gap-3" onclick="showPopup('info3')">
+            <i class="fas fa-wind text-5xl "></i>
+            <h2 class="text-xl font-bold"> Typhoon</h2>
+          </div>
+          <div class="box flex items-center gap-3" onclick="showPopup('info4')">
+            <i class="fas fa-water text-5xl "></i>
+            <h2 class="text-xl font-bold"> Flood</h2>
+          </div>
+        </div>
+        
+<!-- Tab Container -->
+<div id="tab-container" class="mt-6 hidden bg-white p-4 rounded-lg shadow-lg">
+
+  <!-- Fire Safety Tab -->
+  <div id="info1" class="tab-content hidden">
+    <h3 class="text-lg font-bold mb-2 text-red-600">🔥 Fire Safety</h3>
+    <p class="mb-4">Stay low, avoid smoke, and exit quickly. Call emergency services immediately.</p>
+    
+    <!-- Two Column Layout -->
+    <div class="w-full p-4 grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- Left: Info + Call Button -->
+      <div class="space-y-4">
+        <button class="w-full bg-red-600 text-white py-3 rounded-lg flex items-center justify-center">
+          <i class="fas fa-phone-alt mr-2"></i> Call Emergency Services (119)
+        </button>
+
+        <!-- Fire Stations -->
+        <div class="p-4 rounded-lg bg-gray-50">
+          <h2 class="text-lg font-semibold flex items-center mb-2">
+            <i class="fas fa-fire-extinguisher text-blue-500 mr-2"></i> Fire Stations
+          </h2>
+          <div class="ml-6 space-y-2">
+            <div>
+              <p class="font-semibold">Gangnam Fire Station</p>
+              <p class="text-gray-600 text-sm">Distance: 1.8km</p>
+            </div>
+            <div>
+              <p class="font-semibold">Seocho Fire Station</p>
+              <p class="text-gray-600 text-sm">Distance: 2.3km</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Burn Centers -->
+        <div class="p-4 rounded-lg bg-gray-50">
+          <h2 class="text-lg font-semibold flex items-center mb-2">
+            <i class="fas fa-hospital text-green-500 mr-2"></i> Burn Treatment Centers
+          </h2>
+          <div class="ml-6 space-y-2">
+            <div>
+              <p class="font-semibold">Hangang Sacred Heart Hospital</p>
+              <p class="text-gray-600 text-sm">Distance: 3.2km</p>
+            </div>
+            <div>
+              <p class="font-semibold">Seoul National University Burn Center</p>
+              <p class="text-gray-600 text-sm">Distance: 3.8km</p>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="news-btn"><!--Contoh-->
-        <button type="button" class="btn active">All Updates</button>
-        <button type="button" class="btn">Fire</button>
-        <button type="button" class="btn">Earthquake</button>
-        <button type="button" class="btn">Flood</button>
-        <button type="button" class="btn">Typhoon</button>
+      <!-- Right: Map -->
+      <div class="w-full h-full rounded-lg overflow-hidden">
+        <div id="firemap" class="w-full h-96"></div>
+      </div>
+      <script src="/static/fire_map.js"></script>
+    </div>
+  </div>
+
+  <!-- Earthquake Safety Tab -->
+  <div id="info2" class="tab-content hidden">
+    <h3 class="text-lg font-bold mb-2 text-yellow-700">🏠 Earthquake Safety</h3>
+    <p>Drop, cover, and hold on. Stay indoors until the shaking stops.</p>
+
+    <div class="w-full p-4 grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="space-y-4">
+        <button class="w-full bg-red-600 text-white py-3 rounded-lg flex items-center justify-center">
+          <i class="fas fa-phone-alt mr-2"></i> Call Emergency Services (119)
+        </button>
+
+       
+      <!-- Emergency Shelters -->
+      <div class="p-4 rounded-lg bg-gray-50">
+        <h2 class="text-lg font-semibold flex items-center mb-2">
+          <i class="fas fa-home text-cyan-500 mr-2"></i> Emergency Shelters
+        </h2>
+        <div class="ml-6 space-y-2">
+          <div>
+            <p class="font-semibold">Olympic Park Safety Zone</p>
+            <p class="text-gray-600 text-sm">Distance: 2.1km</p>
+          </div>
+          <div>
+            <p class="font-semibold">Yeouido Park Shelter</p>
+            <p class="text-gray-600 text-sm">Distance: 3.5km</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Emergency Medical Centers -->
+      <div class="p-4 rounded-lg bg-gray-50">
+        <h2 class="text-lg font-semibold flex items-center mb-2">
+          <i class="fas fa-briefcase-medical text-red-500 mr-2"></i> Emergency Medical Centers
+        </h2>
+        <div class="ml-6 space-y-2">
+          <div>
+            <p class="font-semibold">Seoul Emergency Medical Center</p>
+            <p class="text-gray-600 text-sm">Distance: 2.8km</p>
+          </div>
+          <div>
+            <p class="font-semibold">National Trauma Center</p>
+            <p class="text-gray-600 text-sm">Distance: 3.3km</p>
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <div class="w-full h-full rounded-lg overflow-hidden">
+        <div id="earthquakeMap" class="mt-4" style="height: 400px;"></div>
+      </div>
+      <script src="/static/earthquake_map.js"></script>
+    </div>
+  </div>
+
+  <!-- Typhoon Safety Tab -->
+  <div id="info3" class="tab-content hidden">
+    <h3 class="text-lg font-bold mb-2 text-blue-600">🌪️ Typhoon Safety</h3>
+    <p>Stay indoors, keep away from windows, and follow government alerts.</p>
+
+    <div class="w-full p-4 grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="space-y-4">
+        <button class="w-full bg-red-600 text-white py-3 rounded-lg flex items-center justify-center">
+          <i class="fas fa-phone-alt mr-2"></i> Call Emergency Services (119)
+        </button>
+
+       <!-- Storm Shelters -->
+      <div class="p-4 rounded-lg bg-gray-50">
+        <h2 class="text-lg font-semibold flex items-center mb-2">
+          <i class="fas fa-cloud-showers-heavy text-indigo-500 mr-2"></i> Storm Shelters
+        </h2>
+        <div class="ml-6 space-y-2">
+          <div>
+            <p class="font-semibold">Jamsil Underground Shelter</p>
+            <p class="text-gray-600 text-sm">Distance: 2.4km</p>
+          </div>
+          <div>
+            <p class="font-semibold">COEX Underground Complex</p>
+            <p class="text-gray-600 text-sm">Distance: 2.9km</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Evacuation Centers -->
+      <div class="p-4 rounded-lg bg-gray-50">
+        <h2 class="text-lg font-semibold flex items-center mb-2">
+          <i class="fas fa-person-running text-orange-500 mr-2"></i> Evacuation Centers
+        </h2>
+        <div class="ml-6 space-y-2">
+          <div>
+            <p class="font-semibold">Seoul Sports Complex</p>
+            <p class="text-gray-600 text-sm">Distance: 3.1km</p>
+          </div>
+          <div>
+            <p class="font-semibold">Lotte World Tower Shelter</p>
+            <p class="text-gray-600 text-sm">Distance: 3.6km</p>
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <div class="w-full h-full rounded-lg overflow-hidden">
+        <img
+          src="https://placehold.co/600x400"
+          alt="Map showing locations of fire stations and burn treatment centers"
+          class="w-full h-full object-cover rounded-lg"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- Flood Safety Tab Content -->
+  <div id="info4" class="tab-content hidden">
+    <!-- Header -->
+    <h3 class="text-lg font-bold mb-2 text-cyan-600">🌊 Flood Safety</h3>
+    <p class="mb-2">Move to higher ground and avoid walking or driving through floodwaters.</p>
+    
+    <!-- Two Column Layout -->
+    <div class="w-full p-4 grid grid-cols-1 lg:grid-cols-2 gap-6">      
+      <!-- Left: Info + Call Button -->
+      <div class="space-y-4">
+        
+        <!-- Call Button -->
+        <button class="w-full bg-red-600 text-white py-3 rounded-lg flex items-center justify-center">
+          <i class="fas fa-phone-alt mr-2"></i> Call Emergency Services (119)
+        </button>
+        
+        <!-- Flood Assistance Centers -->
+        <div class="p-4 rounded-lg bg-gray-50">
+          <h2 class="text-lg font-semibold flex items-center mb-2">
+            <i class="fas fa-life-ring text-blue-500 mr-2"></i> Flood Assistance Centers
+          </h2>
+          <div class="ml-6 space-y-2">
+            <div>
+              <p class="font-semibold">Seoul Flood Relief Center</p>
+              <p class="text-gray-600 text-sm">Distance: 2.0km</p>
+            </div>
+            <div>
+              <p class="font-semibold">Busan Flood Assistance Center</p>
+              <p class="text-gray-600 text-sm">Distance: 3.5km</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Flood Relief Centers -->
+        <div class="p-4 rounded-lg bg-gray-50">
+          <h2 class="text-lg font-semibold flex items-center mb-2">
+            <i class="fas fa-hands-helping text-green-500 mr-2"></i> Flood Relief Centers
+          </h2>
+          <div class="ml-6 space-y-2">
+            <div>
+              <p class="font-semibold">Han River Flood Relief Hub</p>
+              <p class="text-gray-600 text-sm">Distance: 4.0km</p>
+            </div>
+            <div>
+              <p class="font-semibold">Seoul City Emergency Shelter</p>
+              <p class="text-gray-600 text-sm">Distance: 3.8km</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Right: Interactive Map -->
+      <div class="w-full h-full rounded-lg overflow-hidden">
+        <div id="floodMap" class="w-full h-96"></div>
+      </div>
+      <script src="/static/floo_map.js"></script>
+    </div>
+  </div>
+
+  </div>
+  </div>
+       
+<!--  News -->  
+<div class="mt-8">
+<h2 class="text-2xl font-bold mb-1 flex items-center gap-2">
+    <i class="fas fa-newspaper"></i>
+    News
+</h2>
+        <div class="news-btn">
+            <button type="button" class="btn active">All Updates</button>
+            <button type="button" class="btn">Fire</button>
+            <button type="button" class="btn">Earthquake</button>
+            <button type="button" class="btn">Flood</button>
+            <button type="button" class="btn">Typhoon</button>
+        </div>    
+        <script>
+            const buttons = document.querySelectorAll('.news-btn .btn');
+          
+            buttons.forEach(btn => {
+              btn.addEventListener('click', () => {
+                buttons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+              });
+            });
+          </script>
+        <div class="news-updates mt-4 space-y-4" id="news-container">  
+        </div>
+        <script defer src="static/newsList.js"></script>
     </div>
 
-    <script>
-        function showPopup(infoText) {
-          document.getElementById('popup').classList.remove('hidden');
-          document.getElementById('popup-text').innerText = infoText;
-        }
-      
-        function closePopup() {
-          document.getElementById('popup').classList.add('hidden');
-        }
-    </script>
-    
-      <div class="overlay" id="overlay" onclick="closePopup()"></div>
-      <div class="popup" id="popup">
-        <div id="popup-content">Popup Content</div>
-        <button class="close-btn" onclick="closePopup()">Close</button>
+ <!-- Safety Guide -->  
+ <div class="mt-8">
+  <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+      <i class="fas fa-info-circle"></i>
+      Safety Guide
+  </h2>            
+  
+<div class="tabs-safety">
+  <button class="tablinks" onclick="disaster(event, 'Emergency Preparation')">Emergency Preparation</button>
+  <button class="tablinks" onclick="disaster(event, 'Earthquake')">Earthquake</button>
+  <button class="tablinks" onclick="disaster(event, 'Fire')">Fire</button>
+  <button class="tablinks" onclick="disaster(event, 'Flood')">Flood</button>
+  <button class="tablinks" onclick="disaster(event, 'Typhoon')">Typhoon</button>
+</div>
+
+<div class="tabs-wrapper">
+  <div id="Emergency Preparation" class="tabs-content">
+    <div id="carouselEmergency" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="http://www.brandpointcontent.com/InfoGraphics//18479010101.jpg" class="d-block w-100" alt="Emergency Preparedness">
+        </div>
+        <div class="carousel-item">
+          <img src="https://www150.statcan.gc.ca/n1/pub/11-627-m/image/11-627-m2015004-eng.jpg" class="d-block w-100" alt="Disaster Preparedness">
+        </div>
+        <div class="carousel-item">
+          <img src="https://cdn11.bigcommerce.com/s-5d127/images/stencil/500x659/products/12415/15558/PSTR-1054__12140.1631634126.jpg?c=2" class="d-block w-100" alt="Workplace Safety">
+        </div>
       </div>
+      
+      <!-- Previous Button -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselEmergency" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      
+      <!-- Next Button -->
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselEmergency" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+</div>
 
-        <div class="mt-8 flex gap-8 flex-1">
-            <!-- MAP: 70% -->
-            <div class="evacuation-container w-[70%]">
-              <div class="info-box">
-                🚨 Evacuation Route from Ulsan Disaster Area
-              </div>
-              <div id="evacuation" class="h-[500px] rounded-lg shadow-md"></div>
-            </div>
-          
-            <!-- REPORT: 30% -->
-            <div id="report" class="w-[30%] bg-gray-100 p-4 rounded-lg shadow-md">
-              <h3 class="text-lg font-semibold mb-2">📣 Real-Time Report</h3>
-          
-              <!-- Dropdown for report type -->
-              <label for="reportType" class="block font-medium">Type of Issue</label>
-              <select id="reportType" class="w-full p-2 border rounded-md mb-3">
-                <option value="">Select issue</option>
-                <option value="flood">🌊 Flood</option>
-                <option value="blocked_road">⛔ Blocked Road</option>
-                <option value="need_help">🆘 Need Help</option>
-              </select>
-              <!-- Submit button -->
-              <button id="submitReport" class="w-full p-2 bg-red-600 text-white rounded-md">
-                Submit Report
-              </button>
-            </div>
-          </div>
-          
-        
-        <!--  News -->  
-        <div class="mt-8">
-            <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
-                <i class="fas fa-newspaper"></i>
-                News
-            </h2>
-                    <div class="search">
-                        <input type="text" placeholder="Search updates..." class="flex-grow p-2 border rounded-md">
-                        <button class="ml-2 p-2 border rounded-md bg-white">
-                            <i class="fas fa-filter"></i> Filters
-                        </button>
-                    </div>
+<div class="tabs-wrapper">
+  <div id="Earthquake" class="tabs-content">
+    <div id="carouselEarthquake" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="https://cdn.dribbble.com/userupload/15682253/file/original-30e5f416059bbb3ae027fab896428291.png?resize=640x1120&vertical=center" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+          <img src="https://i.pinimg.com/736x/67/d3/18/67d31818ce78b2e78ea4be7eed61bd69.jpg" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+          <img src="https://s3.amazonaws.com/thumbnails.venngage.com/template/9c7a7d05-2bc6-4e7d-a425-e3f446d35330.png" class="d-block w-100" alt="...">
+        </div>
+      </div>
+      
+      <!-- Previous Button -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselEarthquake" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      
+      <!-- Next Button -->
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselEarthquake" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+</div>
 
-                    <div class="news-btn">
-                        <button type="button" class="btn active">All Updates</button>
-                        <button type="button" class="btn">Fire</button>
-                        <button type="button" class="btn">Earthquake</button>
-                        <button type="button" class="btn">Flood</button>
-                        <button type="button" class="btn">Typhoon</button>
-                    </div>    
-                    <script>
-                        const buttons = document.querySelectorAll('.news-btn .btn');
-                      
-                        buttons.forEach(btn => {
-                          btn.addEventListener('click', () => {
-                            buttons.forEach(b => b.classList.remove('active'));
-                            btn.classList.add('active');
-                          });
-                        });
-                      </script>
-                    <div class="news-updates mt-4 space-y-4" id="news-container">
-                        <div class="news-bg" data-category="flood">
-                            <div class="flex items-center mb-2">
-                                <i class="fas fa-exclamation-circle text-red-600 mr-2"></i>
-                                <h2 class="text-lg font-semibold text-red-600">Emergency: Flooding Alert in Gangnam District</h2>
-                            </div>
-                            <div class="flex items-center text-gray-500 text-sm mb-2">
-                                <i class="far fa-clock mr-1"></i> 10 minutes ago
-                                <i class="fas fa-map-marker-alt mx-2"></i> Gangnam District
-                                <span class="ml-auto px-2 py-1 bg-red-200 text-red-600 rounded-md">High Priority</span>
-                            </div>
-                            <p class="text-gray-700">Heavy rainfall has caused flooding in parts of Gangnam. Residents are advised to avoid underground areas and follow evacuation guidelines.</p>
-                        </div>
-                        <div class="news-bg" data-category="fire">
-                            <div class="flex items-center mb-2">
-                                <i class="fas fa-info-circle text-blue-600 mr-2"></i>
-                                <h2 class="text-lg font-semibold text-blue-600">Update: Fire Contained in Seocho Building</h2>
-                            </div>
-                            <div class="flex items-center text-gray-500 text-sm mb-2">
-                                <i class="far fa-clock mr-1"></i> 1 hour ago
-                                <i class="fas fa-map-marker-alt mx-2"></i> Seocho District
-                                <span class="ml-auto px-2 py-1 bg-yellow-200 text-yellow-600 rounded-md">Medium Priority</span>
-                            </div>
-                            <p class="text-gray-700">Firefighters have successfully contained the fire in the commercial building. No injuries reported.</p>
-                        </div>
-                        <div class="news-bg" data-category="earthquake">
-                            <div class="flex items-center mb-2">
-                                <i class="fas fa-check-circle text-green-600 mr-2"></i>
-                                <h2 class="text-lg font-semibold text-green-600">Earthquake Safety Guidelines Updated</h2>
-                            </div>
-                            <div class="flex items-center text-gray-500 text-sm mb-2">
-                                <i class="far fa-clock mr-1"></i> 2 hours ago
-                                <i class="fas fa-map-marker-alt mx-2"></i> Seoul Metropolitan Area
-                                <span class="ml-auto px-2 py-1 bg-green-200 text-green-600 rounded-md">Low Priority</span>
-                            </div>
-                            <p class="text-gray-700">New safety guidelines have been issued for earthquake preparedness. Review the latest protocols.</p>
-                        </div>
-                    </div>
-                </div>
+<div class="tabs-wrapper">
+  <div id="Fire" class="tabs-content">
+    <div id="carouselFire" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="https://cdn.prod.website-files.com/647888ca92d03e3fca3f1ea0/647888ca92d03e3fca3f205d_Fire%20Safety%20Infographic.png" class="d-block w-100" alt="...">
         </div>
+        <div class="carousel-item">
+          <img src="https://pia.gov.ph/uploads/2023/03/a97454a57f3c3b3020710b70264c7fb1.jpg" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+          <img src="https://corporate.homedepot.com/sites/default/files/image_gallery/firesafetyinfographic-01.jpg" class="d-block w-100" alt="...">
+        </div>
+      </div>
+      
+      <!-- Previous Button -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselFire" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      
+      <!-- Next Button -->
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselFire" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+</div>
 
-        <!-- Safety Guide -->  
-        <div class="mt-8">
-            <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
-                <i class="fas fa-info-circle"></i>
-                Safety Guide
-            </h2>            
-            
-        <div class="tabs-safety">
-            <button class="tablinks" onclick="disaster(event, 'Emergency Preparation')">Emergency Preparation</button>
-            <button class="tablinks" onclick="disaster(event, 'Earthquake')">Earthquake</button>
-            <button class="tablinks" onclick="disaster(event, 'Fire')">Fire</button>
-            <button class="tablinks" onclick="disaster(event, 'Flood')">Flood</button>
-            <button class="tablinks" onclick="disaster(event, 'Typhoon')">Typhoon</button>
+<div class="tabs-wrapper">
+  <div id="Flood" class="tabs-content">
+    <div id="carouselFlood" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="https://hsseworld.com/wp-content/uploads/2022/02/Flood-safety-.png" class="d-block w-100" alt="...">
         </div>
-        
-        <div class="tabs-wrapper">
-            <div id="Emergency Preparation" class="tabs-content">
-              <div id="carouselEmergency" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                  <div class="carousel-item active">
-                    <img src="http://www.brandpointcontent.com/InfoGraphics//18479010101.jpg" class="d-block w-100" alt="Emergency Preparedness">
-                  </div>
-                  <div class="carousel-item">
-                    <img src="https://www150.statcan.gc.ca/n1/pub/11-627-m/image/11-627-m2015004-eng.jpg" class="d-block w-100" alt="Disaster Preparedness">
-                  </div>
-                  <div class="carousel-item">
-                    <img src="https://cdn11.bigcommerce.com/s-5d127/images/stencil/500x659/products/12415/15558/PSTR-1054__12140.1631634126.jpg?c=2" class="d-block w-100" alt="Workplace Safety">
-                  </div>
-                </div>
-                
-                <!-- Previous Button -->
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselEmergency" data-bs-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Previous</span>
-                </button>
-                
-                <!-- Next Button -->
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselEmergency" data-bs-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Next</span>
-                </button>
-              </div>
-            </div>
-          </div>
-          
-          <div class="tabs-wrapper">
-            <div id="Earthquake" class="tabs-content">
-              <div id="carouselEarthquake" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                  <div class="carousel-item active">
-                    <img src="https://cdn.dribbble.com/userupload/15682253/file/original-30e5f416059bbb3ae027fab896428291.png?resize=640x1120&vertical=center" class="d-block w-100" alt="...">
-                  </div>
-                  <div class="carousel-item">
-                    <img src="https://i.pinimg.com/736x/67/d3/18/67d31818ce78b2e78ea4be7eed61bd69.jpg" class="d-block w-100" alt="...">
-                  </div>
-                  <div class="carousel-item">
-                    <img src="https://s3.amazonaws.com/thumbnails.venngage.com/template/9c7a7d05-2bc6-4e7d-a425-e3f446d35330.png" class="d-block w-100" alt="...">
-                  </div>
-                </div>
-                
-                <!-- Previous Button -->
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselEarthquake" data-bs-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Previous</span>
-                </button>
-                
-                <!-- Next Button -->
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselEarthquake" data-bs-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Next</span>
-                </button>
-              </div>
-            </div>
-          </div>
-          
-          <div class="tabs-wrapper">
-            <div id="Fire" class="tabs-content">
-              <div id="carouselFire" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                  <div class="carousel-item active">
-                    <img src="https://cdn.prod.website-files.com/647888ca92d03e3fca3f1ea0/647888ca92d03e3fca3f205d_Fire%20Safety%20Infographic.png" class="d-block w-100" alt="...">
-                  </div>
-                  <div class="carousel-item">
-                    <img src="https://pia.gov.ph/uploads/2023/03/a97454a57f3c3b3020710b70264c7fb1.jpg" class="d-block w-100" alt="...">
-                  </div>
-                  <div class="carousel-item">
-                    <img src="https://corporate.homedepot.com/sites/default/files/image_gallery/firesafetyinfographic-01.jpg" class="d-block w-100" alt="...">
-                  </div>
-                </div>
-                
-                <!-- Previous Button -->
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselFire" data-bs-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Previous</span>
-                </button>
-                
-                <!-- Next Button -->
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselFire" data-bs-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Next</span>
-                </button>
-              </div>
-            </div>
-          </div>
-    
-          <div class="tabs-wrapper">
-            <div id="Flood" class="tabs-content">
-              <div id="carouselFlood" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                  <div class="carousel-item active">
-                    <img src="https://hsseworld.com/wp-content/uploads/2022/02/Flood-safety-.png" class="d-block w-100" alt="...">
-                  </div>
-                  <div class="carousel-item">
-                    <img src="https://www.cambriancards.com/wp-content/uploads/2019/11/flood-driving.jpg" class="d-block w-100" alt="...">
-                  </div>
-                  <div class="carousel-item">
-                    <img src="https://corporate.homedepot.com/sites/default/files/image_gallery/firesafetyinfographic-01.jpg" class="d-block w-100" alt="...">
-                  </div>
-                </div>
-                
-                <!-- Previous Button -->
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselFlood" data-bs-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Previous</span>
-                </button>
-                
-                <!-- Next Button -->
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselFlood" data-bs-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Next</span>
-                </button>
-              </div>
-            </div>
-          </div>
-          
-        <div class="tabs-wrapper">
-            <div id="Flood" class="tabs-content">
-                <div class="slideshow-container">
-                    <div class="slides fade">
-                        <div class="number-text">1 / 3</div>
-                        <img src="" alt="Flood 1">
-                    </div>
-        
-                    <div class="slides fade">
-                        <div class="number-text">2 / 3</div>
-                        <img src="" alt="Flood 2">
-                    </div>
-        
-                    <div class="slides fade">
-                        <div class="number-text">3 / 3</div>
-                        <img src="" alt="Flood 3">
-                    </div>
-        
-                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
-        
-                    <br>
-                    <div class="dots">
-                        <span class="dot" onclick="currentSlide(1)"></span>
-                        <span class="dot" onclick="currentSlide(2)"></span>
-                        <span class="dot" onclick="currentSlide(3)"></span>
-                    </div>
-                </div>
-            </div>
+        <div class="carousel-item">
+          <img src="https://www.cambriancards.com/wp-content/uploads/2019/11/flood-driving.jpg" class="d-block w-100" alt="...">
         </div>
-    
-        <div class="tabs-wrapper">
-            <div id="Typhoon" class="tabs-content">
-                <div class="slideshow-container">
-                    <div class="slides fade">
-                        <div class="number-text">1 / 3</div>
-                        <img src="https://media.philstar.com/images/the-philippine-star/headlines/20161019/typhoon-survival-tips-infographic%20%281%29.jpg" alt="Typhoon 1">
-                    </div>
-        
-                    <div class="slides fade">
-                        <div class="number-text">2 / 3</div>
-                        <img src="https://sa.kapamilya.com/absnews/abscbnnews/media/2019/business/07/10/20190710-moneymax-typhoon-3.jpg" alt="Typhoon 2">
-                    </div>
-        
-                    <div class="slides fade">
-                        <div class="number-text">3 / 3</div>
-                        <img src="https://panahon.tv/beta/v2/web/app/uploads/2014/08/2.jpg" alt="Typhoon 3">
-                    </div>
-        
-                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
-        
-                    <br>
-                    <div class="dots">
-                        <span class="dot" onclick="currentSlide(1)"></span>
-                        <span class="dot" onclick="currentSlide(2)"></span>
-                        <span class="dot" onclick="currentSlide(3)"></span>
-                    </div>
-                </div>
-            </div>
+        <div class="carousel-item">
+          <img src="https://corporate.homedepot.com/sites/default/files/image_gallery/firesafetyinfographic-01.jpg" class="d-block w-100" alt="...">
         </div>
-        </div>
+      </div>
+      
+      <!-- Previous Button -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselFlood" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      
+      <!-- Next Button -->
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselFlood" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+</div>
 
-        
+<div class="tabs-wrapper">
+  <div id="Typhoon" class="tabs-content">
+    <div id="carouselTyphoon" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="https://media.philstar.com/images/the-philippine-star/headlines/20161019/typhoon-survival-tips-infographic%20%281%29.jpg" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+          <img src="https://sa.kapamilya.com/absnews/abscbnnews/media/2019/business/07/10/20190710-moneymax-typhoon-3.jpg" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+          <img src="https://panahon.tv/beta/v2/web/app/uploads/2014/08/2.jpg" class="d-block w-100" alt="...">
+        </div>
+      </div>
+      
+      <!-- Previous Button -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselTyphoon" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      
+      <!-- Next Button -->
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselTyphoon" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+</div>
+</div>
+
     </main>    <!-- Chatbot Button -->
     <button 
     onclick="toggleChatbot()" 
@@ -440,38 +625,77 @@
 
     <script src="/static/tab-func.js"></script>
     <script src="/static/safety-image.js"></script>
-    <script src="/static/map.js"></script>
-    <script src="/static/evacuation.js"></script>
     <script src="/static/news.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-
     <script>
-         function toggleChatbot() {
-        const popup = document.getElementById("chatbot-popup");
-        if (popup.style.display === "none" || popup.style.display === "") {
-            popup.style.display = "block";
-        } else {
-            popup.style.display = "none";
-         }
+      let evacuationMap;
+      let generalMap;
+    
+      function initMaps() {
+        evacuationMap = L.map("evacuation").setView([35.5384, 129.3114], 13);
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          maxZoom: 19,
+          attribution: "© OpenStreetMap"
+        }).addTo(evacuationMap);
+    
+        generalMap = L.map("map").setView([35.5384, 129.3114], 13);
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          maxZoom: 19,
+          attribution: "© OpenStreetMap"
+        }).addTo(generalMap);
+      }
+    
+      function showPopup(tabId) {
+        document.getElementById("tab-container").classList.remove("hidden");
+        document.querySelectorAll(".tab-content").forEach((tab) => tab.classList.add("hidden"));
+        document.getElementById(tabId).classList.remove("hidden");
+    
+        enlargeBox(tabId);
+    
+        setTimeout(() => {
+          if (tabId === "info1" && fireMap) {
+            fireMap.invalidateSize();
+          } else if (tabId === "info2" && earthquakeMap) {
+            earthquakeMap.invalidateSize();
+          } else if (tabId === "info3" && typhoonMap) {
+            typhoonMap.invalidateSize();
+          } else if (tabId === "info4" && floodMap) {
+            floodMap.invalidateSize();
+          }
+        }, 300);
+      }
+    
+      function enlargeBox(tabId) {
+        document.querySelectorAll(".box").forEach(box => {
+          box.classList.remove("enlarged");
+        });
+        const selectedBox = document.querySelector(`.box[data-tab="${tabId}"]`);
+        if (selectedBox) {
+          selectedBox.classList.add("enlarged");
         }
-
-        function showPosition(position) {
+      }
+    
+      function toggleChatbot() {
+        const popup = document.getElementById("chatbot-popup");
+        popup.style.display = (popup.style.display === "none" || popup.style.display === "") ? "block" : "none";
+      }
+    
+      function showPosition(position) {
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
-        const map = document.getElementById('map');
-        const evacuation = document.getElementById('evacuation');
-        }
-             
-        function adjustFontSize(size) {
-        const body = document.body;
-        if (size === 'small') {
-        body.style.fontSize = '14px';
-        } else if (size === 'large') {
-        body.style.fontSize = '22px';
-        }
-    }
-
+        // You can still use lat/lon for dynamic updates if needed
+      }
+    
+      function adjustFontSize(size) {
+        document.body.style.fontSize = size === 'small' ? '14px' : '22px';
+      }
+    
+      window.onload = function () {
+        initMaps();
+      };
     </script>
+    
+    
 </body>
 </html>

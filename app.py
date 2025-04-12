@@ -1,10 +1,13 @@
 from flask import Flask, render_template, request, jsonify
 from time import time
 from aiChatbot import PerplexityAIChatbot 
+from news import NewsFetcher
 
 app = Flask(__name__)
 
 model = PerplexityAIChatbot()
+news_fetcher = NewsFetcher()
+
 DISASTER_API_KEY = 'your_disaster_api_key'
 DISASTER_API_URL = 'https://api.safetydata.go.kr/openapi/service/rest/DisasterMsg2/getDisasterMsgList'
 
@@ -42,9 +45,9 @@ def contact():
 def chatbot():
     return render_template("chatbot.html")
 
-@app.route("/bootstrap")
-def bootstrap():
-    return render_template("bootstrap.html")
+@app.route("/map")
+def map():
+    return render_template("map.html")
 
 
 @app.route("/chat", methods=["POST"])
@@ -65,6 +68,11 @@ def chat():
     user_message = request.json.get("message")
     response = model.chat(user_message)
     return jsonify({"response": response})
+
+@app.route('/disaster_summary')
+def disaster_summary():
+    data = news_fetcher.get_news_data()
+    return jsonify(data)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

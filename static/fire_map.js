@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const map = L.map("evacuation").setView([35.5384, 129.3114], 13); // Ulsan coordinates
+  const map = L.map("firemap").setView([35.5384, 129.3114], 13);
+  window.fireMap = map; // 👈 expose globally for resize fix
+
 
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
@@ -18,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
     fillColor: "#f03",
     fillOpacity: 0.5,
     radius: 600
-  }).bindPopup("⚠️ Flood Alert Zone").addTo(floodAlerts);
+  }).bindPopup("⚠️Fire Alert Zone").addTo(floodAlerts);
 
   // Example: Evacuation Zone Polygon
   L.polygon([
@@ -54,9 +56,10 @@ document.addEventListener("DOMContentLoaded", function () {
   shelters.addTo(map);
   blockedRoads.addTo(map);
 
+  
   // Layer toggle control
   const overlays = {
-    "🌊 Flood Alerts": floodAlerts,
+    "🔥 Fire Alerts": floodAlerts,
     "🚪 Evacuation Zones": evacuationZones,
     "🏠 Shelters": shelters,
     "⛔ Blocked Roads": blockedRoads
@@ -64,3 +67,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
   L.control.layers(null, overlays, { collapsed: false }).addTo(map);
 });
+function showFireSafetyTab() {
+  document.getElementById("tab-container").classList.remove("hidden");
+  document.querySelectorAll(".tab-content").forEach(tab => tab.classList.add("hidden"));
+  document.getElementById("info1").classList.remove("hidden");
+
+  setTimeout(() => {
+    if (window.fireMap) {
+      window.fireMap.invalidateSize();
+    }
+  }, 100);
+}
