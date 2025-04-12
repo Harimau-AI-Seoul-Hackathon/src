@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Apps</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <nav>
+                <ul>
+                    <li><a href="">Home</a></li>
+                    <li><a href="location.html">Location</a></li>
+                    <li><a href="safety_guide.html">Safety Guide</a></li>
+                    <li><a href="donations.html">Donations</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </nav>
+            <button onclick="toggleFontSize()">Change Font Size</button>
+        </div>
+    </header>
+
+    <div id="main-content">
+        <main>
+            <section id="homepage">
+                <h1>Welcome to Emergency Apps</h1>
+                <button onclick="detectLocation()">Detect My Location</button>
+                <div id="map">Map with personalized info</div>
+                <button onclick="sendEmergencyAlert()">Emergency Alert</button>
+
+                <h2>Live Disaster Updates (Korea)</h2>
+                <iframe src="https://www.safetydata.go.kr/disaster-data/disasterBoard" 
+                        width="100%" 
+                        height="600px" 
+                        style="border: 1px solid #ccc; border-radius: 8px;">
+                </iframe>
+
+                <button onclick="window.open('https://www.safetydata.go.kr/disaster-data/disasterBoard', '_blank')">
+                    View Real-Time Disaster Updates
+                </button>
+
+                <div id="embassy-info">Embassy Info</div>
+                <div id="emergency-contact">Emergency Contact (Frontliners)</div>
+                <div id="ai-chatbot">AI Chatbot</div>
+                <h2>Latest Articles</h2>
+                <div id="articles">Article</div>
+                <h2>Announcements</h2>
+                <div id="announcements">Announcements</div>
+                <h2>Donations & Fundraising</h2>
+                <div id="donations">Donations & Fundraising</div>
+            </section>
+
+            <section id="location">
+                <h2>Location of Emergency Services</h2>
+                <ul>
+                    <li>Civil Defence Shelters</li>
+                    <li>Emergency Medical Centers</li>
+                    <li>Fire Station</li>
+                    <li>Police Station</li>
+                </ul>
+            </section>
+
+            <section id="safety-guide">
+                <h2>Safety Guide</h2>
+                <ul>
+                    <li>Natural Disaster</li>
+                    <li>Social Disaster</li>
+                    <li>Life Safety</li>
+                    <li>Emergency Preparation</li>
+                    <li>Earthquake</li>
+                </ul>
+            </section>
+
+            <section id="donations">
+                <h2>Donations</h2>
+                <p>Your contributions help us provide essential services during emergencies. Please consider donating.</p>
+                <button onclick="donate()">Donate Now</button>
+            </section>
+
+            <section id="accessibility">
+                <h2>Accessibility</h2>
+                <p>Information on accessibility options for users with disabilities.</p>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 Emergency Apps. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function detectLocation() {
+            alert("Location detection triggered!");
+        }
+
+        function sendEmergencyAlert() {
+            alert("Emergency alert sent!");
+        }
+
+        function donate() {
+            alert("Redirecting to donation page...");
+        }
+
+        function toggleFontSize() {
+            const mainContent = document.getElementById('main-content');
+            mainContent.classList.toggle('large-font');
+        }
+    </script>
+</body>
+</html>

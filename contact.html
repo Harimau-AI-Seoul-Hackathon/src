@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Emergency Contact - Phone Service</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f5f5;
+    }
+
+    .container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 220px;
+      background-color: #1b677a;
+      color: white;
+      padding: 1rem;
+    }
+
+    .sidebar h2 {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar li {
+      margin: 10px 0;
+    }
+
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .content {
+      flex: 1;
+      padding: 2rem;
+      background-color: white;
+    }
+
+    .breadcrumb {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+
+    .card {
+      display: flex;
+      align-items: center;
+      border-top: 1px solid #ccc;
+      padding: 1.5rem 0;
+    }
+
+    .card img {
+      max-width: 100px;
+      margin-right: 2rem;
+    }
+
+    .card-info {
+      flex: 1;
+    }
+
+    .card-info p {
+      margin: 4px 0;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .buttons button {
+      background-color: #1b677a;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+    }
+
+    .buttons button:hover {
+      background-color: #14515f;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #ddd;
+      margin: 2rem 0;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+      }
+
+      .card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .card img {
+        margin-bottom: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <aside class="sidebar">
+      <h2>Emergency Contact</h2>
+      <ul>
+        <li><a href="#">Embassies</a></li>
+        <li><a href="#">Phone Service</a></li>
+        <li><a href="#">Related Organization</a></li>
+      </ul>
+    </aside>
+    <main class="content">
+      <div class="breadcrumb">Home &gt; Emergency Contact &gt; <strong>Phone Service</strong></div>
+      <div class="section-title">Phone Service</div>
+
+      <div class="card">
+        <img src="https://www.bbbkorea.org/images/bbb_logo.png" alt="bbb Korea Logo" />
+        <div class="card-info">
+          <p><strong>bbbkorea</strong></p>
+          <p>Tel: 1588-5644</p>
+          <p>Website: <a href="https://www.bbbkorea.org" target="_blank">https://www.bbbkorea.org</a></p>
+          <p>Supported languages: English, Japanese, Chinese, French, Spanish, Italian, Russian, German, Portuguese, Arabic, Polish, Turkish, Swedish, Thai, Vietnamese, Indonesian, Mongolian, Hindi, Malay, Swahili</p>
+          <p>Available hours: 24 hours a day, 365 days a year</p>
+        </div>
+        <div class="buttons">
+          <button onclick="window.open('tel:15885644')">Tel</button>
+          <button onclick="window.open('https://www.bbbkorea.org', '_blank')">Website</button>
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="card">
+        <img src="https://www.hikorea.go.kr/static/images/ko/main/logo.png" alt="Hi Korea Logo" />
+        <div class="card-info">
+          <p><strong>Foreigner Information Center</strong></p>
+          <p>Tel: 1345</p>
+          <p>Website: <a href="https://www.hikorea.go.kr" target="_blank">https://www.hikorea.go.kr</a></p>
+          <p>Supported languages: Korean, Chinese, English, Vietnamese, Thai, Japanese, Mongolian, Indonesian, French, Bangladeshi, Pakistani, Russian, Nepali, Cambodian, Burmese, German, Spanish, Filipino, Arabic, Sri Lankan</p>
+          <p>Available hours: Weekdays 09:00 ~ 22:00</p>
+        </div>
+        <div class="buttons">
+          <button onclick="window.open('tel:1345')">Tel</button>
+          <button onclick="window.open('https://www.hikorea.go.kr', '_blank')">Website</button>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
