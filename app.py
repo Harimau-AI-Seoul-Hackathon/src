@@ -24,15 +24,6 @@ user_calls = {}
 def home():
     return render_template("index.html")
 
-@app.route("/test")
-def test():
-    return render_template("indextest.html")
-
-
-@app.route("/location")
-def location():
-    return render_template("location.html")
-
 @app.route("/safety_guide")
 def safety_guide():
     return render_template("safety_guide.html")
@@ -44,11 +35,6 @@ def contact():
 @app.route("/chatbot")
 def chatbot():
     return render_template("chatbot.html")
-
-@app.route("/map")
-def map():
-    return render_template("map.html")
-
 
 @app.route("/chat", methods=["POST"])
 def chat():

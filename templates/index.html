@@ -79,7 +79,7 @@
 
 
     :root {
-    --site-font-size: 18px;-
+    --site-font-size: 18px;
   }
 
   body {
@@ -105,7 +105,7 @@
 </style>
 <body class="bg-gray-100">
     <header class="bg-red-600 text-white p-6">
-        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center" id="header">
             <div class="text-center md:text-left">
                 <h1 class="text-4xl font-bold" style="color:white;">resQ: Ready to Rescue</h1>
                 <p class="text-lg">24/7 Emergency Assistance & Support</p>
@@ -144,7 +144,31 @@
                       }
                     });
                   });
+                    const x = document.getElementById("header");
+
+                    function getLocation() {
+                      if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(success, error);
+                      } else { 
+                        x.innerHTML = "Geolocation is not supported by this browser.";
+                      }
+                    }
+
+                    function success(position) {
+                      x.innerHTML = "Latitude: " + position.coords.latitude + 
+                      "<br>Longitude: " + position.coords.longitude;
+                    }
+
+                    function error() {
+                      alert("Sorry, no position available.");
+                    }
+                    
                 </script>
+                <!--translate-->
+                <div class="form-check form-switch m-3">
+                  <input class="form-check-input" type="checkbox" id="sizeToggle">
+                  <label class="form-check-label" for="sizeToggle">EN</label>
+                </div>
             </div>
         </div>
     </header>
@@ -335,80 +359,80 @@
           </div>
         </div>
       </div>
-      </div>
-
-      <div class="w-full h-full rounded-lg overflow-hidden">
-        <img
-          src="https://placehold.co/600x400"
-          alt="Map showing locations of fire stations and burn treatment centers"
-          class="w-full h-full object-cover rounded-lg"
-        />
-      </div>
     </div>
-  </div>
 
-  <!-- Flood Safety Tab Content -->
-  <div id="info4" class="tab-content hidden">
-    <!-- Header -->
-    <h3 class="text-lg font-bold mb-2 text-cyan-600">🌊 Flood Safety</h3>
-    <p class="mb-2">Move to higher ground and avoid walking or driving through floodwaters.</p>
-    
-    <!-- Two Column Layout -->
-    <div class="w-full p-4 grid grid-cols-1 lg:grid-cols-2 gap-6">      
-      <!-- Left: Info + Call Button -->
-      <div class="space-y-4">
-        
-        <!-- Call Button -->
-        <button class="w-full bg-red-600 text-white py-3 rounded-lg flex items-center justify-center">
-          <i class="fas fa-phone-alt mr-2"></i> Call Emergency Services (119)
-        </button>
-        
-        <!-- Flood Assistance Centers -->
-        <div class="p-4 rounded-lg bg-gray-50">
-          <h2 class="text-lg font-semibold flex items-center mb-2">
-            <i class="fas fa-life-ring text-blue-500 mr-2"></i> Flood Assistance Centers
-          </h2>
-          <div class="ml-6 space-y-2">
-            <div>
-              <p class="font-semibold">Seoul Flood Relief Center</p>
-              <p class="text-gray-600 text-sm">Distance: 2.0km</p>
-            </div>
-            <div>
-              <p class="font-semibold">Busan Flood Assistance Center</p>
-              <p class="text-gray-600 text-sm">Distance: 3.5km</p>
-            </div>
+       <!-- Right: Interactive Map -->
+       <div class="w-full h-full rounded-lg overflow-hidden">
+        <div id="typhoonMap" class="w-full h-96"></div>
+      </div>
+      <script src="/static/typhoon_map.js"></script>
+    </div>
+    </div>
+ 
+ <!-- Flood Safety Tab Content -->
+ <div id="info4" class="tab-content hidden">
+  <!-- Header -->
+  <h3 class="text-lg font-bold mb-2 text-cyan-600">🌊 Flood Safety</h3>
+  <p class="mb-2">Move to higher ground and avoid walking or driving through floodwaters.</p>
+  
+  <!-- Two Column Layout -->
+  <div class="w-full p-4 grid grid-cols-1 lg:grid-cols-2 gap-6">      
+    <!-- Left: Info + Call Button -->
+    <div class="space-y-4">
+      
+      <!-- Call Button -->
+      <button class="w-full bg-red-600 text-white py-3 rounded-lg flex items-center justify-center">
+        <i class="fas fa-phone-alt mr-2"></i> Call Emergency Services (119)
+      </button>
+      
+      <!-- Flood Assistance Centers -->
+      <div class="p-4 rounded-lg bg-gray-50">
+        <h2 class="text-lg font-semibold flex items-center mb-2">
+          <i class="fas fa-life-ring text-blue-500 mr-2"></i> Flood Assistance Centers
+        </h2>
+        <div class="ml-6 space-y-2">
+          <div>
+            <p class="font-semibold">Seoul Flood Relief Center</p>
+            <p class="text-gray-600 text-sm">Distance: 2.0km</p>
           </div>
-        </div>
-        
-        <!-- Flood Relief Centers -->
-        <div class="p-4 rounded-lg bg-gray-50">
-          <h2 class="text-lg font-semibold flex items-center mb-2">
-            <i class="fas fa-hands-helping text-green-500 mr-2"></i> Flood Relief Centers
-          </h2>
-          <div class="ml-6 space-y-2">
-            <div>
-              <p class="font-semibold">Han River Flood Relief Hub</p>
-              <p class="text-gray-600 text-sm">Distance: 4.0km</p>
-            </div>
-            <div>
-              <p class="font-semibold">Seoul City Emergency Shelter</p>
-              <p class="text-gray-600 text-sm">Distance: 3.8km</p>
-            </div>
+          <div>
+            <p class="font-semibold">Busan Flood Assistance Center</p>
+            <p class="text-gray-600 text-sm">Distance: 3.5km</p>
           </div>
         </div>
       </div>
       
-      <!-- Right: Interactive Map -->
-      <div class="w-full h-full rounded-lg overflow-hidden">
-        <div id="floodMap" class="w-full h-96"></div>
+      <!-- Flood Relief Centers -->
+      <div class="p-4 rounded-lg bg-gray-50">
+        <h2 class="text-lg font-semibold flex items-center mb-2">
+          <i class="fas fa-hands-helping text-green-500 mr-2"></i> Flood Relief Centers
+        </h2>
+        <div class="ml-6 space-y-2">
+          <div>
+            <p class="font-semibold">Han River Flood Relief Hub</p>
+            <p class="text-gray-600 text-sm">Distance: 4.0km</p>
+          </div>
+          <div>
+            <p class="font-semibold">Seoul City Emergency Shelter</p>
+            <p class="text-gray-600 text-sm">Distance: 3.8km</p>
+          </div>
+        </div>
       </div>
-      <script src="/static/floo_map.js"></script>
     </div>
+    
+    <!-- Right: Interactive Map -->
+    <div class="w-full h-full rounded-lg overflow-hidden">
+      <div id="floodMap" class="w-full h-96"></div>
+    </div>
+    <script src="/static/flood_map.js"></script>
   </div>
+</div>
+ </div>
+
+  
 
   </div>
-  </div>
-       
+</div> 
 <!--  News -->  
 <div class="mt-8">
 <h2 class="text-2xl font-bold mb-1 flex items-center gap-2">
@@ -625,7 +649,6 @@
 
     <script src="/static/tab-func.js"></script>
     <script src="/static/safety-image.js"></script>
-    <script src="/static/news.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>

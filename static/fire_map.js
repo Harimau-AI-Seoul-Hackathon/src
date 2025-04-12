@@ -9,18 +9,18 @@ document.addEventListener("DOMContentLoaded", function () {
   }).addTo(map);
 
   // Layer groups
-  const floodAlerts = L.layerGroup();
+  const fireAlerts = L.layerGroup();
   const evacuationZones = L.layerGroup();
   const shelters = L.layerGroup();
   const blockedRoads = L.layerGroup();
 
-  // Example: Flood Alert Areas
+  // Example: Fire Alert Areas
   L.circle([35.54, 129.31], {
     color: "red",
     fillColor: "#f03",
     fillOpacity: 0.5,
     radius: 600
-  }).bindPopup("⚠️Fire Alert Zone").addTo(floodAlerts);
+  }).bindPopup("⚠️Fire Alert Zone").addTo(fireAlerts);
 
   // Example: Evacuation Zone Polygon
   L.polygon([
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }).bindPopup("⛔ Blocked Road").addTo(blockedRoads);
 
   // Add all to map initially
-  floodAlerts.addTo(map);
+  fireAlerts.addTo(map);
   evacuationZones.addTo(map);
   shelters.addTo(map);
   blockedRoads.addTo(map);
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
   
   // Layer toggle control
   const overlays = {
-    "🔥 Fire Alerts": floodAlerts,
+    "🔥 Fire Alerts": fireAlerts,
     "🚪 Evacuation Zones": evacuationZones,
     "🏠 Shelters": shelters,
     "⛔ Blocked Roads": blockedRoads

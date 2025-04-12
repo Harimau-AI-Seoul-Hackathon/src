@@ -73,7 +73,7 @@ const categoryMap = {
     loadNews()
       .then(articles => {
         renderArticles(articles);
-        initFilters();  // now that .news-bg exist, wire up your filters :contentReference[oaicite:0]{index=0}
+        initFilters();  
       })
       .catch(err => console.error('Failed to load news:', err));
   });
