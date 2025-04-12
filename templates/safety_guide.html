@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Safety Guide</title>
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <nav>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="location">Location</a></li>
+                    <li><a href="">Safety Guide</a></li>
+                    <li><a href="donations">Donations</a></li>
+                    <li><a href="contact">Contact Us</a></li>
+                </ul>
+            </nav>
+            <button onclick="toggleFontSize()">Change Font Size</button>
+        </div>
+    </header>
+    <div class="safety-title">
+        <h1>Safety Guide</h1>
+    </div>
+    
+    <div class="tabs-safety">
+        <button class="tablinks active" onclick="disaster(event, 'Emergency Preparation')">Emergency Preparation</button>
+        <button class="tablinks" onclick="disaster(event, 'Earthquake')">Earthquake</button>
+        <button class="tablinks" onclick="disaster(event, 'Fire')">Fire</button>
+        <button class="tablinks" onclick="disaster(event, 'Flood')">Flood</button>
+        <button class="tablinks" onclick="disaster(event, 'Typhoon')">Typhoon</button>
+    </div>
+
+    <div class="tabs-wrapper">
+        <div id="Earthquake" class="tabs-content active">
+            <div class="slideshow-container">
+                <div class="slides fade">
+                    <div class="number-text">1 / 3</div>
+                    <img src="http://www.brandpointcontent.com/InfoGraphics//18479010101.jpg" alt="Emergency Preparedness">
+                </div>
+
+                <div class="slides fade">
+                    <div class="number-text">2 / 3</div>
+                    <img src="https://www150.statcan.gc.ca/n1/pub/11-627-m/image/11-627-m2015004-eng.jpg" alt="Disaster Preparedness">
+                </div>
+
+                <div class="slides fade">
+                    <div class="number-text">3 / 3</div>
+                    <img src="https://cdn11.bigcommerce.com/s-5d127/images/stencil/500x659/products/12415/15558/PSTR-1054__12140.1631634126.jpg?c=2" alt="Disaster Preparedness in Workplace">
+                </div>
+
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+                <br>
+                <div class="dots">
+                    <span class="dot" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                    <span class="dot" onclick="currentSlide(3)"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tabs-wrapper">
+        <div id="Earthquake" class="tabs-content">
+            <div class="slideshow-container">
+                <div class="slides fade">
+                    <div class="number-text">1 / 3</div>
+                    <img src="http://www.brandpointcontent.com/InfoGraphics//18479010101.jpg" alt="Emergency Preparedness">
+                </div>
+
+                <div class="slides fade">
+                    <div class="number-text">2 / 3</div>
+                    <img src="https://www150.statcan.gc.ca/n1/pub/11-627-m/image/11-627-m2015004-eng.jpg" alt="Disaster Preparedness">
+                </div>
+
+                <div class="slides fade">
+                    <div class="number-text">3 / 3</div>
+                    <img src="https://cdn11.bigcommerce.com/s-5d127/images/stencil/500x659/products/12415/15558/PSTR-1054__12140.1631634126.jpg?c=2" alt="Disaster Preparedness in Workplace">
+                </div>
+
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+                <br>
+                <div class="dots">
+                    <span class="dot" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                    <span class="dot" onclick="currentSlide(3)"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="Fire" class="tabs-content">
+    </div>
+    <div id="Flood" class="tabs-content">
+    </div>
+    <div id="Typhoon" class="tabs-content">
+    </div>
+    </div>
+    
+    <script src="/static/tab-func.js"></script>
+    <script src="/static/safety-image.js"></script>
+</body>
+</html>

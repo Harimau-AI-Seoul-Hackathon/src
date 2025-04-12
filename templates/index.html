@@ -1,0 +1,137 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Korea Emergency Response</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/static/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<style>
+    <style>
+    .main-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    #map {
+      flex: 1 1 60%;
+      height: 400px;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+    }
+
+    .info-boxes {
+      flex: 1 1 35%;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .info-box {
+      background: #f4f4f4;
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .info-box button {
+      margin-top: 10px;
+    }
+
+    .content-section {
+      padding: 20px;
+    }
+
+    iframe {
+      border: none;
+      border-radius: 10px;
+    }
+
+</style>
+<body class="bg-gray-100">
+    <header class="bg-red-600 text-white p-6">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+            <div class="text-center md:text-left">
+                <h1 class="text-3xl font-bold">Korea Emergency Response</h1>
+                <p class="text-lg">24/7 Emergency Assistance & Support</p>
+            </div>
+            <div class="flex items-center space-x-4 mt-4 md:mt-0">
+                <button class="bg-white text-red-600 px-4 py-2 rounded">119</button>
+                <button class="bg-white text-red-600 px-4 py-2 rounded">112</button>
+                <a href="/contact">
+                    <button class="bg-red-800 text-white px-4 py-2 rounded">Emergency Contact</button>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto py-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Cards -->
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="flex items-center space-x-4">
+                    <i class="fas fa-warehouse text-red-600 text-2xl"></i>
+                    <h2 class="text-xl font-bold">Civil Defense Shelters</h2>
+                </div>
+                <p class="mt-2 text-gray-600">No facilities found</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="flex items-center space-x-4">
+                    <i class="fas fa-hospital text-red-600 text-2xl"></i>
+                    <h2 class="text-xl font-bold">Emergency Medical Centers</h2>
+                </div>
+                <p class="mt-2 text-gray-600">No facilities found</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="flex items-center space-x-4">
+                    <i class="fas fa-shield-alt text-red-600 text-2xl"></i>
+                    <h2 class="text-xl font-bold">Police Stations</h2>
+                </div>
+                <p class="mt-2 text-gray-600">No facilities found</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="flex items-center space-x-4">
+                    <i class="fas fa-fire-extinguisher text-red-600 text-2xl"></i>
+                    <h2 class="text-xl font-bold">Fire Stations</h2>
+                </div>
+                <p class="mt-2 text-gray-600">No facilities found</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="flex items-center space-x-4">
+                    <i class="fas fa-bolt text-red-600 text-2xl"></i>
+                    <h2 class="text-xl font-bold">Weather Warnings</h2>
+                </div>
+                <p class="mt-2 text-gray-600">Advanced weather monitoring and early warning system.</p>
+                <button class="mt-4 bg-red-600 text-white px-4 py-2 rounded">Check Weather</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Question Mark Chat Button -->
+    <button 
+    onclick="toggleChatbot()" 
+    class="fixed bottom-0 right-0 bg-red-600 text-white p-4 rounded-full shadow-lg m-4 z-50">
+    <i class="fas fa-question"></i>
+    </button>
+
+    <!-- Chatbot Popup -->
+    <div id="chatbot-popup">
+        <div class="chat-header">
+            <span>AI Chatbot</span>
+            <button onclick="toggleChatbot()">×</button>
+        </div>
+        <iframe src="/chatbot" frameborder="0"></iframe>
+    </div>
+
+    <script>
+        function toggleChatbot() {
+            const popup = document.getElementById("chatbot-popup");
+            popup.style.display = popup.style.display === "none" || popup.style.display === "" ? "block" : "none";
+        }
+    </script>
+</body>
+</html>

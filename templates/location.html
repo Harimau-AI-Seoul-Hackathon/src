@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <title>Location</title>
+    <link href="https://cdn.tailwindcss.com" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <nav>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="">Location</a></li>
+                    <li><a href="safety_guide">Safety Guide</a></li>
+                    <li><a href="donations">Donations</a></li>
+                    <li><a href="contact">Contact Us</a></li>
+                </ul>
+            </nav>
+            <button onclick="toggleFontSize()">Change Font Size</button>
+        </div>
+    </header>
+    
+    <main class="p-4">
+        <h1>Select a Location</h1>
+  <div class="grid-container">
+    <div class="box" onclick="showPopup('info1')">Civil Defense Shelter</div>
+    <div class="box" onclick="showPopup('info2')">Emergency Medical Centers</div>
+    <div class="box" onclick="showPopup('info3')">Fire Stations</div>
+    <div class="box" onclick="showPopup('info4')">Police Station</div>
+  </div>
+
+  <div class="overlay" id="overlay" onclick="closePopup()"></div>
+  <div class="popup" id="popup">
+    <div id="popup-content">Popup Content</div>
+    <button class="close-btn" onclick="closePopup()">Close</button>
+  </div>
+
+  <script>
+    function showPopup(info) {
+      const popup = document.getElementById('popup');
+      const overlay = document.getElementById('overlay');
+      const content = document.getElementById('popup-content');
+  
+      if (info === 'info4') {//police stations
+        content.innerHTML = `<h2>Nearby Police Stations</h2><div id="map"></div>`;
+  
+        setTimeout(() => {
+          const map = L.map('map').setView([37.5665, 126.9780], 11); // Centered on Seoul
+  
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+          }).addTo(map);
+  
+          const stations = [
+            { name: "Gangnam Police Station", lat: 37.5091, lon: 127.0628 },
+            { name: "Jongno Police Station", lat: 37.5720, lon: 126.9794 },
+            { name: "Yongsan Police Station", lat: 37.5326, lon: 126.9901 },
+            { name: "Mapo Police Station", lat: 37.5547, lon: 126.9236 },
+            { name: "Songpa Police Station", lat: 37.4991, lon: 127.1122 }
+          ];
+  
+          stations.forEach(station => {
+            L.marker([station.lat, station.lon])
+              .addTo(map)
+              .bindPopup(`<b>${station.name}</b>`);
+          });
+        }, 100); // slight delay to ensure DOM renders
+        
+      } else if (info === 'info3'){//Fire Stations
+        content.innerHTML = `<h2>Nearby Fire Stations</h2><div id="map"></div>`;
+
+        setTimeout(() => {
+            const map = L.map('map').setView([37.5665, 126.9780], 11); // Seoul center
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+
+            const fireStations = [
+            { name: "Jongno Fire Station", lat: 37.5704, lon: 126.9853 },
+            { name: "Mapo Fire Station", lat: 37.5505, lon: 126.9550 },
+            { name: "Gangnam Fire Station", lat: 37.4950, lon: 127.0364 },
+            { name: "Yongsan Fire Station", lat: 37.5364, lon: 126.9656 },
+            { name: "Seodaemun Fire Station", lat: 37.5774, lon: 126.9363 }
+            ];
+
+            fireStations.forEach(station => {
+                L.marker([station.lat, station.lon])
+                .addTo(map)
+                .bindPopup(`<b>${station.name}</b>`);
+            });
+        }, 100);
+
+      } else {
+        content.innerText = `You clicked on ${info}`;
+      }
+  
+      popup.style.display = 'block';
+      overlay.style.display = 'block';
+    }
+  
+    function closePopup() {
+      document.getElementById('popup').style.display = 'none';
+      document.getElementById('overlay').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
+
+
