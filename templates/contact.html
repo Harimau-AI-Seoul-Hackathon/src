@@ -10,12 +10,8 @@
   <header class="bg-red-600 text-white p-6">
     <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
         <div class="text-center md:text-left">
-            <h1 class="text-3xl font-bold">Korea Emergency Response</h1>
+            <h1 class="text-3xl font-bold" style="color:white;">resQ: Ready to Rescue</h1>
             <p class="text-lg">24/7 Emergency Assistance & Support</p>
-        </div>
-        <div class="flex items-center space-x-4 mt-4 md:mt-0">
-            <button class="bg-white text-red-400 px-4 py-2 rounded">a</button>
-            <button class="bg-white text-red-800 px-4 py-2 rounded">A</button>
         </div>
     </div>
 </header>
@@ -34,7 +30,9 @@
     <!-- Content -->
     <main class="content">
        <!-- Breadcrumb -->
-      <div class="breadcrumb"><a href="/">Home</a> &gt; Emergency Contact &gt; <strong>Embassies</strong></div>
+       <div class="breadcrumb">
+        <a href="/">Home</a> &gt; Emergency Contact &gt; <strong id="breadcrumb-current">Embassies</strong>
+      </div>
 
       <!-- Embassies Card -->
       <div id="embassy" class="card-section card" style="display: none;">
@@ -354,11 +352,57 @@
 
       <!-- Organizations Card -->
       <div id="organizations" class="card-section card" style="display: none;">
-        <h3>Related Organizations</h3>
-        <p><strong>International Support Center</strong></p>
-        <p>Tel: 1234-5678</p>
-      </div>
+        <!-- Republic of Korea Immigration Service -->
+        <div class="org-card">
+          <div class="org-content">
+            <h2>Republic of Korea Immigration Service</h2>
+            <img src="https://yt3.googleusercontent.com/gg1RQD9caYxDY8MXzMFR3o3lHbQR7gU7ylt40kjFyyZa5AZ23381ZpEBs3Y6KXjpbQvAijuG=s160-c-k-c0x00ffffff-no-rj" class="org-logo" alt="Immigration Logo">
+            <p><strong>Tel 📞:</strong> 1345</p>
+            <div class="button-group">
+              <a href="https://www.immigration.go.kr/immigration/1530/subview.do"> Click Here for more information</a>
+            </div>
+          </div>
+        </div>
 
+        <!-- Hi Korea -->
+        <div class="org-card">
+          <div class="org-content">
+            <h2>Hi Korea</h2>
+            <img src="https://static.wixstatic.com/media/828d1f_5db55742fe0a4316be01dc6d2907944c~mv2.gif" class="org-logo" alt="Hi Korea Logo">
+            <p><strong>Tel 📞:</strong> 1345</p>
+            <p>This is the official website of the Korean government for foreigners, providing various information related to your stay as well as emergency contact information.</p>
+            <div class="button-group">
+              <a href="https://www.hikorea.go.kr/Main.pt"> Click Here for more information</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Korean National Police Agency -->
+        <div class="org-card">
+          <div class="org-content">
+            <h2>Korean National Police Agency</h2>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Korean_National_Police_Agency_Emblem.svg/250px-Korean_National_Police_Agency_Emblem.svg.png" class="org-logo" alt="Police Logo">
+            <p><strong>Tel 📞:</strong> 112</p>
+            <div class="button-group">
+              <a href="https://www.police.go.kr/eng/main.do"> Click Here for more information</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Incheon International Airport -->
+        <div class="org-card">
+          <div class="org-content">
+            <h2>Incheon International Airport</h2>
+            <img src="https://upload.wikimedia.org/wikipedia/ru/5/5e/Incheon-International-Airport-Logo.png" class="org-logo" alt="Incheon Airport Logo">
+            <p><strong>Tel 📞:</strong> 1577-2600</p>
+            <p>This is the official website of the Korean government for foreigners, providing various information related to your stay as well as emergency contact information.</p>
+            <div class="button-group">
+              <a href="https://www.airport.kr/ap_cnt/ko/cus/tel/emetel/emetel.do"> Click Here for more information</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </main>
   </div>
 
@@ -372,8 +416,22 @@
 
       const target = document.getElementById(sectionId);
       if (target) {
+        event.preventDefault();
         target.style.display = 'block';
       }
+      const breadcrumbMap = {
+    embassy: 'Embassies',
+    phone: 'Phone Service',
+    organizations: 'Related Organization'
+  };
+
+  const breadcrumb = document.getElementById('breadcrumb-current');
+  if (breadcrumb) {
+    breadcrumb.textContent = breadcrumbMap[sectionId] || '';
+  }
+
+  // Prevent auto-scroll to anchor
+  history.replaceState(null, null, ' ');
     }
 
     // Optional: Set default visible card (phone)

@@ -3,20 +3,31 @@ function disaster(event, type) {
 
     // Hide all tab contents
     tabcontent = document.getElementsByClassName("tabs-content");
-    for(i = 0; i < tabcontent.length; i++) {
+    for (i = 0; i < tabcontent.length; i++) {
         tabcontent[i].style.display = "none";
     }
 
     // Remove active class from all tab buttons
     tablinks = document.getElementsByClassName("tablinks");
-    for(i = 0; i < tablinks.length; i++) {
+    for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
 
     // Show the selected tab
-    document.getElementById(type).style.display = "block";
-    event.currentTarget.className += " active";
+    const tab = document.getElementById(type);
+    tab.style.display = "block";
 
-    // Restart slideshow in the new tab
-    showSlides(1, document.getElementById(type));  // <-- call a custom function for this tab
+    // Add active class
+    if (event && event.currentTarget) {
+        event.currentTarget.className += " active";
+    } else {
+        const fallbackBtn = document.querySelector(`.tablinks[onclick*="${type}"]`);
+        if (fallbackBtn) fallbackBtn.className += " active";
+    }
+
+    // Start slideshow
+    showSlides(1, tab);
 }
+window.onload = function() {
+    disaster(null, 'Emergency Preparation'); // Activate the Emergency Preparation tab
+};

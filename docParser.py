@@ -48,4 +48,4 @@ extraction_response = extraction_client.chat.completions.create(
 )
 
 print("Information Extraction Response:")
-print(extraction_response)
+print(json.loads(extraction_response.choices[0].message.content))

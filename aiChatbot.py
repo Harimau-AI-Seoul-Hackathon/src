@@ -27,7 +27,7 @@ class PerplexityAIChatbot:
             },
             {
                 "role": "user",
-                "content": user_message,
+                "content": user_message + "please limit the response to 100 words and only pure text, no code blocks or markdowns",
             },
         ]
 

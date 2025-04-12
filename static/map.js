@@ -1,45 +1,34 @@
-function openModal() {
-    document.getElementById('shelterModal').classList.remove('hidden');
-    setTimeout(initializeMap, 200); // Ensure modal renders before loading map
-  }
+// Initialize map centered on South Korea
+const map = L.map('map').setView([36.5, 127.8], 7); // South Korea center
 
-  function closeModal() {
-    document.getElementById('shelterModal').classList.add('hidden');
-  }
+// Tile Layer
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
 
-  let mapInitialized = false;
+// ===== Layer Groups =====
+const hospitalLayer = L.layerGroup();
+const policeLayer = L.layerGroup();
+const fireStationLayer = L.layerGroup();
 
-  function initializeMap() {
-    if (mapInitialized) return;
+// === Sample Markers ===
+// Hospitals
+L.marker([37.5665, 126.9780]).bindPopup("Seoul National University Hospital").addTo(hospitalLayer);
+L.marker([35.1796, 129.0756]).bindPopup("Busan Medical Center").addTo(hospitalLayer);
 
-    const map = L.map('map').setView([37.5665, 126.9780], 11); // Seoul default
+// Police
+L.marker([37.5714, 126.9910]).bindPopup("Jongno Police Station").addTo(policeLayer);
+L.marker([35.1600, 129.0545]).bindPopup("Busan Central Police Station").addTo(policeLayer);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19
-    }).addTo(map);
+// Fire Stations
+L.marker([37.5509, 126.9901]).bindPopup("Seoul Fire Station").addTo(fireStationLayer);
+L.marker([35.1537, 129.0595]).bindPopup("Busan Fire Station").addTo(fireStationLayer);
 
-    fetch("http://localhost:5000/api/disaster-data")
-      .then(res => res.json())
-      .then(data => {
-        const items = data.response.body.items;
-        if (!items || items.length === 0) {
-          alert("No disaster data found.");
-          return;
-        }
+// ===== Layer Control =====
+const overlayMaps = {
+  "🏥 Hospitals": hospitalLayer,
+  "🚓 Police Stations": policeLayer,
+  "🔥 Fire Stations": fireStationLayer
+};
 
-        items.forEach(item => {
-          const lat = parseFloat(item.lat || item.latitude);
-          const lon = parseFloat(item.lon || item.longitude);
-          const info = item.msg || item.content || "Disaster Alert";
-
-          if (lat && lon) {
-            L.marker([lat, lon])
-              .addTo(map)
-              .bindPopup(info);
-          }
-        });
-      })
-      .catch(err => console.error("Error loading data:", err));
-
-    mapInitialized = true;
-  }
+L.control.layers(null, overlayMaps, { collapsed: false }).addTo(map);

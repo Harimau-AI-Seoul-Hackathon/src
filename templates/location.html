@@ -40,6 +40,12 @@
     <button class="close-btn" onclick="closePopup()">Close</button>
   </div>
 
+  
+  <div id="map" class="flex-1">
+    Waiting for the map to reload.
+  
+    <script src="/static/map.js"></script>
+
   <script>
     function showPopup(info) {
       const popup = document.getElementById('popup');
@@ -86,15 +92,15 @@
             { name: "Mapo Fire Station", lat: 37.5505, lon: 126.9550 },
             { name: "Gangnam Fire Station", lat: 37.4950, lon: 127.0364 },
             { name: "Yongsan Fire Station", lat: 37.5364, lon: 126.9656 },
-            { name: "Seodaemun Fire Station", lat: 37.5774, lon: 126.9363 }
-            ];
+        { name: "Seodaemun Fire Station", lat: 37.5774, lon: 126.9363 }
+  ];
 
-            fireStations.forEach(station => {
-                L.marker([station.lat, station.lon])
-                .addTo(map)
-                .bindPopup(`<b>${station.name}</b>`);
-            });
-        }, 100);
+  fireStations.forEach(station => {
+    L.marker([station.lat, station.lon])
+      .addTo(map)
+      .bindPopup(`<b>${station.name}</b>`);
+  });
+}, 100);
 
       } else {
         content.innerText = `You clicked on ${info}`;

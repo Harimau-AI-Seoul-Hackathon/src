@@ -1,0 +1,13 @@
+{
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "summary": {"type": "string"},
+      "category": {"type": "string", "enum": ["지진", "홍수", "태풍", "산불"]},
+      "location": {"type": "string"},
+      "date": {"type": "string"}
+    },
+    "required": ["summary", "category", "location", "date"]
+  }
+}
