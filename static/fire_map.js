@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const map = L.map("firemap").setView([35.5384, 129.3114], 13);
+  const map = L.map("firemap").setView([35.5384, 129.3114], 15);
   window.fireMap = map; // 👈 expose globally for resize fix
 
 

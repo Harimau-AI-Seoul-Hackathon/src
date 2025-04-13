@@ -114,6 +114,16 @@ section {
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
+section.leaflet-control-layers-list {
+  padding: 0;
+  box-shadow: none;
+}
+
+.leaflet-control-layers-list label span{
+  font-size: calc( var(--site-font-size) * 0.8 ) !important;
+}
+
+
 h1 {
     color: white;
 }
