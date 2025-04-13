@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const map = L.map("firemap").setView([35.5384, 129.3114], 15);
+  const map = L.map("firemap").setView([35.5384, 129.3114], 13);
   window.fireMap = map; // 👈 expose globally for resize fix
 
 
@@ -56,6 +56,15 @@ document.addEventListener("DOMContentLoaded", function () {
   shelters.addTo(map);
   blockedRoads.addTo(map);
 
+  
+  // Layer toggle control
+  const overlays = {
+    "🔥 Fire Alerts": fireAlerts,
+    "🚪 Evacuation Zones": evacuationZones,
+    "🏠 Shelters": shelters,
+    "⛔ Blocked Roads": blockedRoads
+  };
+
   L.control.layers(null, overlays, { collapsed: false }).addTo(map);
 });
 function showFireSafetyTab() {
@@ -69,10 +78,3 @@ function showFireSafetyTab() {
     }
   }, 100);
 }
-
-// Add reset functionality
-document.getElementById('reset-map').addEventListener('click', () => {
-  if (window.fireMap) {
-    window.fireMap.setView([35.5384, 129.3114], 13); // Reset to original center (Ulsan area)
-  }
-});
